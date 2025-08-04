@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Projetos podem ser lidos por todos, mas apenas usuários autenticados podem escrever
+    match /projects/{document} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Outras coleções requerem autenticação para leitura e escrita
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
