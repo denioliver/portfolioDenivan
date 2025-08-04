@@ -1,7 +1,8 @@
-import { useState, useEffect, useContext, createContext } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { onAuthStateChanged, auth } from '../services/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import type { User } from 'firebase/auth';
+import { auth } from '../services/firebase';
 
 interface AuthContextType {
   user: User | null;
@@ -30,16 +31,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
     });
 
-    return unsubscribe;
+    return () => unsubscribe();
   }, []);
 
+  const value = {
+    user,
+    loading,
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
