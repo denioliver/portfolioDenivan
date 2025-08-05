@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { addFeedback } from '../services/firestore';
+import { handleFeedbackSubmission } from '../services/emailService';
 
 const ContactContainer = styled.section`
   min-height: 100vh;
@@ -224,7 +225,7 @@ export const ContactSimple = () => {
     setIsLoading(true);
 
     try {
-      // Salvar feedback no Firebase
+      // 1. Salvar feedback no Firebase
       await addFeedback({
         name: formData.name,
         email: formData.email,
@@ -232,6 +233,21 @@ export const ContactSimple = () => {
         message: formData.message,
         timestamp: Date.now()
       });
+
+      // 2. 📧 Enviar email de notificação
+      console.log('📧 Enviando notificação por email...');
+      const emailResult = await handleFeedbackSubmission({
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+      });
+
+      if (emailResult.success) {
+        console.log('✅ Email enviado com sucesso!');
+      } else {
+        console.warn('⚠️ Erro no envio do email:', emailResult.error);
+      }
 
       setShowSuccess(true);
       setFormData({

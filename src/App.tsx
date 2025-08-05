@@ -26,7 +26,7 @@ function App() {
 }
 
 function AppContent() {
-  const [showSplash, setShowSplash] = useState(false); // Desabilitar splash temporariamente
+  const [showSplash, setShowSplash] = useState(true); // Reativar splash screen
   const { isDark, toggleTheme } = useTheme();
 
   // Selecionar tema baseado no estado
@@ -34,12 +34,10 @@ function AppContent() {
 
   // 🎯 Controla se deve exibir splash screen (apenas na primeira visita da sessão)
   useEffect(() => {
-    // Temporariamente desabilitado para debug
-    // const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
-    // if (hasSeenSplash) {
-    //   setShowSplash(false);
-    // }
-    setShowSplash(false);
+    const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
+    if (hasSeenSplash) {
+      setShowSplash(false);
+    }
 
     // 🔧 Disponibilizar função de setup do Firestore globalmente
     (window as any).setupFirestore = setupFirestoreCollections;
