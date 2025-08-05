@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 interface ThemeToggleProps {
@@ -58,24 +58,10 @@ const ToggleSlider = styled(motion.div)`
   }
 `;
 
-const IconWrapper = styled(motion.span)`
-  font-size: 0.8rem;
-  color: ${({ theme }) => theme.colors.textMuted};
-
-  @media (max-width: 768px) {
-    font-size: 0.7rem;
-  }
-`;
-
 // 🎨 Animações do toggle
 const toggleVariants = {
   light: { x: 0 },
   dark: { x: 25 }
-};
-
-const iconVariants = {
-  hidden: { scale: 0, rotate: -180 },
-  visible: { scale: 1, rotate: 0 }
 };
 
 /**
@@ -92,24 +78,6 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ isDark, toggleTheme })
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
     >
-      {/* 🌅 Ícone do sol */}
-      <IconWrapper>
-        <AnimatePresence>
-          {!isDark && (
-            <motion.span
-              variants={iconVariants}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              transition={{ duration: 0.3 }}
-            >
-              ☀️
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </IconWrapper>
-
-      {/* 🎯 Slider animado */}
       <ToggleSlider
         variants={toggleVariants}
         animate={isDark ? "dark" : "light"}
@@ -119,21 +87,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ isDark, toggleTheme })
       </ToggleSlider>
 
       {/* 🌙 Ícone da lua */}
-      <IconWrapper>
-        <AnimatePresence>
-          {isDark && (
-            <motion.span
-              variants={iconVariants}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              transition={{ duration: 0.3 }}
-            >
-              🌙
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </IconWrapper>
+
     </ToggleContainer>
   );
 };

@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { addFeedback } from '../services/firestore';
 import { handleFeedbackSubmission } from '../services/emailService';
+import logoGitHub from '../assets/logos/github.png';
+import logoLinkedIn from '../assets/logos/linkedin.png';
+import logoEmail from '../assets/logos/email.png';
 
 const ContactContainer = styled.section`
   min-height: 100vh;
@@ -40,10 +43,12 @@ const Subtitle = styled.p`
 `;
 
 const ContentGrid = styled.div`
-  display: grid;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  align-items: start;
+  align-items: center;
 
   @media (max-width: 968px) {
     grid-template-columns: 1fr;
@@ -51,16 +56,27 @@ const ContentGrid = styled.div`
   }
 `;
 
-const ContactInfo = styled.div``;
+const ContactInfo = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
+`;
 
 const InfoCard = styled.div`
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: ${({ theme }) => theme.colors.card};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 20px;
   padding: 2rem;
-  margin-bottom: 2rem;
+  margin: 10px;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+
+
   cursor: pointer;
 
   &:hover {
@@ -71,16 +87,28 @@ const InfoCard = styled.div`
   }
 `;
 
-const InfoIcon = styled.div`
+const InfoIcon = styled.div<{ $iconSrc?: string }>`
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #8b7cf8, #1dd1a1);
+  background: ${({ $iconSrc }) =>
+    $iconSrc
+      ? `url(${$iconSrc}) center/contain no-repeat`
+      : 'linear-gradient(135deg, #8b7cf8, #1dd1a1)'
+  };
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  filter: ${({ $iconSrc }) => $iconSrc ? 'brightness(1.1)' : 'none'};
+  transition: all 0.3s ease;
+
+  /* Se for uma imagem, adiciona um fundo sutil */
+  ${({ $iconSrc }) => $iconSrc && `
+    background-color: rgba(255, 255, 255, 0.1);
+    background-size: 35px 35px;
+  `}
 `;
 
 const InfoTitle = styled.h3`
@@ -96,6 +124,7 @@ const InfoText = styled.p`
 `;
 
 const ContactForm = styled.div`
+  width: 80%;
   background: ${({ theme }) => theme.colors.card};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 20px;
@@ -268,25 +297,19 @@ export const ContactSimple = () => {
 
   const contactInfo = [
     {
-      icon: '📧',
+      icon: logoEmail,
       title: 'Email',
       text: 'denyoliver777@gmail.com',
       action: () => window.open('mailto:denyoliver777@gmail.com', '_blank')
     },
     {
-      icon: '📱',
-      title: 'WhatsApp',
-      text: '(75) 9.9148-9231',
-      action: () => window.open('https://wa.me/5575991489231', '_blank')
-    },
-    {
-      icon: '�',
+      icon: logoGitHub,
       title: 'GitHub',
       text: 'github.com/denioliver',
       action: () => window.open('https://github.com/denioliver', '_blank')
     },
     {
-      icon: '💼',
+      icon: logoLinkedIn,
       title: 'LinkedIn',
       text: 'linkedin.com/in/denivan-oliveira',
       action: () => window.open('https://www.linkedin.com/in/denivan-oliveira', '_blank')
@@ -307,7 +330,7 @@ export const ContactSimple = () => {
           <ContactInfo>
             {contactInfo.map((info, index) => (
               <InfoCard key={index} onClick={info.action}>
-                <InfoIcon>{info.icon}</InfoIcon>
+                <InfoIcon $iconSrc={info.icon} />
                 <InfoTitle>{info.title}</InfoTitle>
                 <InfoText>{info.text}</InfoText>
               </InfoCard>

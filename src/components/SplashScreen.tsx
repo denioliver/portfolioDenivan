@@ -58,16 +58,6 @@ const NameTitle = styled(motion.h1)`
   line-height: 1.1;
 `;
 
-// 📱 Texto de carregamento
-const LoadingText = styled(motion.p)`
-  font-size: 1.2rem;
-  font-weight: 500;
-  font-family: 'Poppins', sans-serif;
-  color: rgba(255, 255, 255, 0.7);
-  margin-top: 2rem;
-  letter-spacing: 0.1em;
-`;
-
 // 🎯 Container do cubo com animação de explosão
 const CubeContainer = styled(motion.div)`
   perspective: 1000px;
@@ -139,12 +129,12 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
   useEffect(() => {
     const timer1 = setTimeout(() => {
       setStartExplosion(true);
-    }, 5500); // Inicia explosão após 5.5s (era 2.5s)
+    }, 2500); // Inicia explosão após 5.5s (era 2.5s)
 
     const timer2 = setTimeout(() => {
       setShowSplash(false);
       setTimeout(onComplete, 500); // Delay para fade out completo
-    }, 6500); // Remove splash após 6.5s (era 3.5s)
+    }, 3500); // Remove splash após 6.5s (era 3.5s)
 
     return () => {
       clearTimeout(timer1);
@@ -268,13 +258,6 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
             </CubeContainer>
 
             {/* 📱 Texto de carregamento */}
-            <LoadingText
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              Carregando...
-            </LoadingText>
           </ContentContainer>
         </SplashContainer>
       )}
