@@ -239,7 +239,6 @@ export const Home: React.FC = () => {
       opacity: 1,
       transition: {
         duration: 0.8,
-        ease: "easeOut",
       },
     },
   };
@@ -250,7 +249,6 @@ export const Home: React.FC = () => {
     transition: {
       duration: 6,
       repeat: Infinity,
-      ease: "easeInOut",
     },
   };
 
@@ -262,7 +260,6 @@ export const Home: React.FC = () => {
       transition: {
         delay: i * 0.1 + 0.5,
         duration: 0.5,
-        ease: "easeOut",
       },
     }),
   };
