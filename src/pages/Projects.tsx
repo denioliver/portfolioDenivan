@@ -1,10 +1,20 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-// Comentado temporariamente - problemas com Firebase
-// import { getProjects } from '../services/firestore';
-// import type { Project } from '../services/firestore';
-import { mockProjects, type Project } from '../data/mockProjects';
+import { getProjects } from '../services/firestore';
+import type { Project } from '../services/firestore';
+
+// Função para carregar imagem local baseada no título do projeto
+const getProjectImage = (title: string): string => {
+  try {
+    // Tenta carregar a imagem baseada no título exato
+    return new URL(`../assets/imgProjects/${title}.png`, import.meta.url).href;
+  } catch {
+    console.warn(`Imagem não encontrada para o projeto: ${title}`);
+    // Fallback para uma imagem padrão se não encontrar
+    return 'https://via.placeholder.com/400x300/1a1a1a/ffffff?text=Projeto';
+  }
+};
 
 const ProjectsSection = styled(motion.section)`
   min-height: 100vh;
@@ -78,11 +88,11 @@ const ProjectName = styled.h3`
   font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: ${({ theme }) => theme.spacing.sm};
-  color: ${({ theme }) => theme.colors.text.primary};
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 const ProjectDescription = styled.p`
-  color: ${({ theme }) => theme.colors.text.secondary};
+  color: ${({ theme }) => theme.colors.textSecondary};
   line-height: 1.6;
   margin-bottom: ${({ theme }) => theme.spacing.md};
 `;
@@ -106,7 +116,7 @@ const TechTag = styled.span`
 const LoadingMessage = styled(motion.div)`
   text-align: center;
   padding: ${({ theme }) => theme.spacing.xxl};
-  color: ${({ theme }) => theme.colors.text.secondary};
+  color: ${({ theme }) => theme.colors.textSecondary};
   font-size: 1.1rem;
 `;
 
@@ -120,7 +130,7 @@ const ErrorMessage = styled(motion.div)`
 const EmptyState = styled(motion.div)`
   text-align: center;
   padding: ${({ theme }) => theme.spacing.xxl};
-  color: ${({ theme }) => theme.colors.text.secondary};
+  color: ${({ theme }) => theme.colors.textSecondary};
 `;
 
 const EmptyIcon = styled.div`
@@ -133,17 +143,21 @@ export const Projects = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  console.log('🏠 Componente Projects renderizado, projects:', projects); // Debug
+
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         setLoading(true);
-        // Usando dados mockados temporariamente
-        // const projectsData = await getProjects();
-        const projectsData = mockProjects;
+        console.log('🔥 Buscando projetos do Firestore...'); // Debug
+        // Busca os projetos do Firestore
+        const projectsData = await getProjects();
+        console.log('📊 Projetos carregados:', projectsData); // Debug
+        console.log('📊 Quantidade de projetos:', projectsData.length); // Debug
         setProjects(projectsData);
       } catch (err) {
+        console.error('❌ Erro ao buscar projetos:', err); // Debug melhorado
         setError('Erro ao carregar projetos. Tente novamente mais tarde.');
-        console.error('Erro ao buscar projetos:', err);
       } finally {
         setLoading(false);
       }
@@ -236,7 +250,7 @@ export const Projects = () => {
                   layout
                 >
                   <ProjectImage
-                    imageUrl={project.image || '/api/placeholder/400/200'}
+                    imageUrl={getProjectImage(project.title)}
                   />
                   <ProjectContent>
                     <ProjectName>{project.title}</ProjectName>

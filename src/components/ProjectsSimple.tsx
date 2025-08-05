@@ -1,6 +1,19 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ProjectCard3D } from './ProjectCard3D';
 import { ScrollReveal } from './ScrollReveal';
+import { getProjects } from '../services/firestore';
+import type { Project } from '../services/firestore';
+
+// Função para carregar imagem local baseada no título do projeto
+const getProjectImage = (title: string): string => {
+  try {
+    return new URL(`../assets/imgProjects/${title}.png`, import.meta.url).href;
+  } catch {
+    console.warn(`Imagem não encontrada para o projeto: ${title}`);
+    return 'https://via.placeholder.com/400x300/1a1a1a/ffffff?text=Projeto';
+  }
+};
 
 const ProjectsContainer = styled.section`
   min-height: 100vh;
@@ -91,61 +104,44 @@ const CardWrapper = styled.div`
 `;
 
 export const ProjectsSimple = () => {
-  const projects = [
-    {
-      id: 1,
-      title: "E-commerce Platform",
-      description: "Plataforma completa de e-commerce com carrinho de compras, pagamentos integrados e painel administrativo.",
-      icon: "🛒",
-      technologies: ["React", "TypeScript", "Node.js", "MongoDB", "Stripe"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    },
-    {
-      id: 2,
-      title: "Dashboard Analytics",
-      description: "Dashboard interativo para análise de dados com gráficos dinâmicos e relatórios em PDF.",
-      icon: "📊",
-      technologies: ["React", "Chart.js", "Material-UI", "Firebase"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    },
-    {
-      id: 3,
-      title: "API RESTful",
-      description: "API robusta com autenticação JWT, documentação Swagger e testes automatizados.",
-      icon: "🔌",
-      technologies: ["Node.js", "Express", "PostgreSQL", "Jest", "Docker"],
-      githubUrl: "https://github.com"
-    },
-    {
-      id: 4,
-      title: "Mobile App",
-      description: "Aplicativo mobile cross-platform com navegação fluida e sincronização offline.",
-      icon: "📱",
-      technologies: ["React Native", "Redux", "Firebase", "AsyncStorage"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    },
-    {
-      id: 5,
-      title: "Portfolio Website",
-      description: "Website portfolio responsivo com animações suaves e otimização SEO.",
-      icon: "🌐",
-      technologies: ["Next.js", "Framer Motion", "Styled Components"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    },
-    {
-      id: 6,
-      title: "Task Management",
-      description: "Sistema de gerenciamento de tarefas com colaboração em tempo real.",
-      icon: "✅",
-      technologies: ["Vue.js", "Socket.io", "MongoDB", "Express"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    }
-  ];
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        setLoading(true);
+        console.log('🔥 Buscando projetos do Firestore para ProjectsSimple...');
+        const projectsData = await getProjects();
+        console.log('📊 Projetos carregados:', projectsData);
+        setProjects(projectsData);
+      } catch (err) {
+        console.error('❌ Erro ao buscar projetos:', err);
+        // Em caso de erro, usar dados de fallback ou array vazio
+        setProjects([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  // Se estiver carregando, mostrar loading
+  if (loading) {
+    return (
+      <ProjectsContainer id="projects">
+        <Container>
+          <ScrollReveal>
+            <Title>Meus Projetos</Title>
+          </ScrollReveal>
+          <div style={{ textAlign: 'center', padding: '4rem', color: '#666' }}>
+            Carregando projetos...
+          </div>
+        </Container>
+      </ProjectsContainer>
+    );
+  }
 
   return (
     <ProjectsContainer id="projects">
@@ -161,8 +157,11 @@ export const ProjectsSimple = () => {
                 <ProjectCard3D
                   title={project.title}
                   description={project.description}
-                  icon={project.icon}
+                  icon="🚀" // Ícone padrão ou você pode mapear baseado no tipo
                   stack={project.technologies}
+                  imageUrl={getProjectImage(project.title)} // Passa a imagem
+                  liveUrl={project.liveUrl}
+                  githubUrl={project.githubUrl}
                 />
               </CardWrapper>
             ))}

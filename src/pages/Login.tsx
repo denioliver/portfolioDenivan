@@ -39,15 +39,33 @@ const LoginCard = styled(motion.div)`
   border-radius: 20px;
   padding: 3rem;
   width: 100%;
-  max-width: 420px;
+  max-width: 900px;
   backdrop-filter: blur(20px);
   box-shadow: 0 20px 60px ${({ theme }) => theme.colors.shadow};
   transition: all 0.3s ease;
   
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
+    max-width: 420px;
     padding: 2rem;
     margin: 1rem;
   }
+`;
+
+const LoginContent = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+`;
+
+const FormSection = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const BackButton = styled(Link)`
@@ -173,6 +191,51 @@ const ErrorMessage = styled.div`
   border-radius: 8px;
 `;
 
+const AdminInfo = styled.div`
+  padding: 1.5rem;
+  background: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: 12px;
+  height: fit-content;
+`;
+
+const InfoTitle = styled.h3`
+  color: ${({ theme }) => theme.colors.primary};
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const InfoDescription = styled.p`
+  color: ${({ theme }) => theme.colors.textSecondary};
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+const FeatureList = styled.ul`
+  color: ${({ theme }) => theme.colors.textSecondary};
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 1.2rem;
+`;
+
+const FeatureItem = styled.li`
+  margin-bottom: 0.5rem;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -231,37 +294,65 @@ export const Login = () => {
           Acesse o painel para gerenciar seus projetos
         </Subtitle>
 
-        <Form onSubmit={handleSubmit}>
-          <FormGroup>
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="seu@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </FormGroup>
+        <LoginContent>
+          <FormSection>
+            <Form onSubmit={handleSubmit}>
+              <FormGroup>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="seu@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </FormGroup>
 
-          <FormGroup>
-            <Label htmlFor="password">Senha</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="Digite sua senha"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </FormGroup>
+              <FormGroup>
+                <Label htmlFor="password">Senha</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Digite sua senha"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </FormGroup>
 
-          {error && <ErrorMessage>{error}</ErrorMessage>}
+              {error && <ErrorMessage>{error}</ErrorMessage>}
 
-          <LoginButton type="submit" disabled={isLoading}>
-            {isLoading ? 'Entrando...' : 'Entrar'}
-          </LoginButton>
-        </Form>
+              <LoginButton type="submit" disabled={isLoading}>
+                {isLoading ? 'Entrando...' : 'Entrar'}
+              </LoginButton>
+            </Form>
+          </FormSection>
+
+          <AdminInfo>
+            <InfoTitle>
+              � Olá! Esta é minha área administrativa
+            </InfoTitle>
+            <InfoDescription>
+              Oi! Aqui é onde eu, Denivan, cuido de todo o conteúdo do meu portfólio.
+              É como os bastidores de um teatro - aqui acontece a magia! ✨
+            </InfoDescription>
+            <InfoDescription>
+              <strong>Se você pudesse entrar aqui, veria:</strong>
+            </InfoDescription>
+            <FeatureList>
+              <FeatureItem>📁 Onde eu adiciono meus novos projetos (e às vezes removo os que não gosto mais 😅)</FeatureItem>
+              <FeatureItem>🖼️ Upload das imagens mais bonitas dos meus trabalhos</FeatureItem>
+              <FeatureItem>📝 Onde escrevo e reescrevo as descrições até ficarem perfeitas</FeatureItem>
+              <FeatureItem>🔗 Organizo todos os links dos projetos e repositórios</FeatureItem>
+              <FeatureItem>📊 Fico vendo quem visita meu portfólio (de forma anônima, claro!)</FeatureItem>
+              <FeatureItem>💬 Leio todos os feedbacks que vocês mandam - adoro receber!</FeatureItem>
+            </FeatureList>
+            <InfoDescription>
+              <em>É meu cantinho especial, protegido com Firebase. Só eu tenho a chave! 🔐</em>
+            </InfoDescription>
+          </AdminInfo>
+        </LoginContent>
 
         {/* Debug temporário - desabilitado enquanto resolve Firebase */}
         {/* <div style={{ marginTop: '2rem' }}>

@@ -40,6 +40,7 @@ function AppContent() {
     }
 
     // 🔧 Disponibilizar função de setup do Firestore globalmente
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).setupFirestore = setupFirestoreCollections;
     console.log('🔧 Para configurar as coleções do Firebase, execute no console: setupFirestore()');
   }, []);

@@ -27,7 +27,7 @@ const Title = styled(motion.h2)`
 const Subtitle = styled(motion.p)`
   font-size: 1.1rem;
   text-align: center;
-  color: ${({ theme }) => theme.colors.text.secondary};
+  color: ${({ theme }) => theme.colors.textSecondary};
   margin-bottom: ${({ theme }) => theme.spacing.xl};
   line-height: 1.6;
 `;

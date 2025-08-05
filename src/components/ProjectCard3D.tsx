@@ -10,7 +10,7 @@ const CardContainer = styled(motion.div)`
 `;
 
 // 🃏 Card principal com efeito tilt
-const TiltCard = styled(motion.div)`
+const TiltCard = styled(motion.div) <{ $hasUrl?: boolean }>`
   background: ${({ theme }) => theme.colors.card};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 20px;
@@ -20,6 +20,7 @@ const TiltCard = styled(motion.div)`
   transform-style: preserve-3d;
   position: relative;
   z-index: 1;
+  cursor: ${({ $hasUrl }) => $hasUrl ? 'pointer' : 'default'};
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.primary}30;
@@ -69,14 +70,51 @@ const StackItem = styled.span`
   font-weight: 500;
 `;
 
-const ProjectImage = styled.div`
+const ProjectImage = styled.div<{ $hasImage?: boolean }>`
   height: 200px;
-  background: linear-gradient(135deg, rgba(139, 124, 248, 0.2), rgba(29, 209, 161, 0.2));
+  background: ${({ $hasImage }) =>
+    $hasImage
+      ? 'transparent'
+      : 'linear-gradient(135deg, rgba(139, 124, 248, 0.2), rgba(29, 209, 161, 0.2))'
+  };
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 3rem;
+  position: relative;
+  overflow: hidden;
+`;
+
+const ProjectImageImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
+const ProjectImageIcon = styled.div`
+  position: relative;
+  z-index: 1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+`;
+
+const ClickIndicator = styled.div<{ $visible: boolean }>`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: ${({ theme }) => theme.colors.primary};
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  z-index: 3;
+  opacity: ${({ $visible }) => $visible ? 1 : 0};
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 `;
 
 const ProjectContent = styled.div`
@@ -101,6 +139,9 @@ interface ProjectCardProps {
   description: string;
   icon: string;
   stack: string[];
+  imageUrl?: string;
+  liveUrl?: string;
+  githubUrl?: string;
 }
 
 /**
@@ -112,8 +153,20 @@ interface ProjectCardProps {
  * - Animações suaves com Framer Motion
  * - Design glassmorphism moderno
  */
-export const ProjectCard3D = ({ title, description, icon, stack }: ProjectCardProps) => {
+export const ProjectCard3D = ({ title, description, icon, stack, imageUrl, liveUrl, githubUrl }: ProjectCardProps) => {
   const [showStack, setShowStack] = useState(false);
+
+  // 🔗 Verifica se tem alguma URL disponível
+  const hasUrl = !!(liveUrl || githubUrl);
+
+  // 🔗 Função para lidar com o clique no card
+  const handleCardClick = () => {
+    // Prioriza liveUrl, depois githubUrl
+    const targetUrl = liveUrl || githubUrl;
+    if (targetUrl) {
+      window.open(targetUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
 
   // 🎭 Função para calcular rotação baseada na posição do mouse
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -143,12 +196,14 @@ export const ProjectCard3D = ({ title, description, icon, stack }: ProjectCardPr
       variants={cardHover}
     >
       <TiltCard
+        $hasUrl={hasUrl}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setShowStack(true)}
         onMouseLeave={(e) => {
           setShowStack(false);
           handleMouseLeave(e);
         }}
+        onClick={hasUrl ? handleCardClick : undefined}
         style={{ transformStyle: 'preserve-3d' }}
       >
         {/* 🎨 Overlay da stack - aparece no hover */}
@@ -169,7 +224,15 @@ export const ProjectCard3D = ({ title, description, icon, stack }: ProjectCardPr
         )}
 
         {/* 📸 Conteúdo principal do card */}
-        <ProjectImage>{icon}</ProjectImage>
+        <ProjectImage $hasImage={!!imageUrl}>
+          {imageUrl && <ProjectImageImg src={imageUrl} alt={title} />}
+          {/* Só mostra o ícone se não tiver imagem */}
+          {!imageUrl && <ProjectImageIcon>{icon}</ProjectImageIcon>}
+          {/* Indicador de clique quando tem URL */}
+          <ClickIndicator $visible={hasUrl}>
+            {liveUrl ? '🔗 Ver Site' : '📁 Ver Código'}
+          </ClickIndicator>
+        </ProjectImage>
         <ProjectContent>
           <ProjectTitle>{title}</ProjectTitle>
           <ProjectDescription>{description}</ProjectDescription>
