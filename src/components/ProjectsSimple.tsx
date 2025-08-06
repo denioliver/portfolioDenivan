@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { ProjectCard3D } from './ProjectCard3D';
 import { ScrollReveal } from './ScrollReveal';
 import { getProjects } from '../services/firestore';
@@ -104,6 +105,7 @@ const CardWrapper = styled.div`
 `;
 
 export const ProjectsSimple = () => {
+  const { t } = useTranslation();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -133,10 +135,10 @@ export const ProjectsSimple = () => {
       <ProjectsContainer id="projects">
         <Container>
           <ScrollReveal>
-            <Title>Meus Projetos</Title>
+            <Title>{t('projects.title')}</Title>
           </ScrollReveal>
           <div style={{ textAlign: 'center', padding: '4rem', color: '#666' }}>
-            Carregando projetos...
+            {t('projects.loading')}
           </div>
         </Container>
       </ProjectsContainer>
@@ -147,24 +149,30 @@ export const ProjectsSimple = () => {
     <ProjectsContainer id="projects">
       <Container>
         <ScrollReveal>
-          <Title>Meus Projetos</Title>
+          <Title>{t('projects.title')}</Title>
         </ScrollReveal>
 
         <ScrollReveal stagger>
           <ProjectsGrid>
-            {projects.map((project) => (
-              <CardWrapper key={project.id}>
-                <ProjectCard3D
-                  title={project.title}
-                  description={project.description}
-                  icon="🚀" // Ícone padrão ou você pode mapear baseado no tipo
-                  stack={project.technologies}
-                  imageUrl={getProjectImage(project.title)} // Passa a imagem
-                  liveUrl={project.liveUrl}
-                  githubUrl={project.githubUrl}
-                />
-              </CardWrapper>
-            ))}
+            {projects.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '4rem', color: '#666', gridColumn: '1/-1' }}>
+                {t('projects.empty')}
+              </div>
+            ) : (
+              projects.map((project) => (
+                <CardWrapper key={project.id}>
+                  <ProjectCard3D
+                    title={project.title}
+                    description={project.description}
+                    icon="🚀" // Ícone padrão ou você pode mapear baseado no tipo
+                    stack={project.technologies}
+                    imageUrl={getProjectImage(project.title)} // Passa a imagem
+                    liveUrl={project.liveUrl}
+                    githubUrl={project.githubUrl}
+                  />
+                </CardWrapper>
+              ))
+            )}
           </ProjectsGrid>
         </ScrollReveal>
       </Container>

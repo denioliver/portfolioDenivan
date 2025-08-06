@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { cardHover } from '../utils/animations';
 import { useState } from 'react';
 
@@ -154,6 +155,7 @@ interface ProjectCardProps {
  * - Design glassmorphism moderno
  */
 export const ProjectCard3D = ({ title, description, icon, stack, imageUrl, liveUrl, githubUrl }: ProjectCardProps) => {
+  const { t } = useTranslation();
   const [showStack, setShowStack] = useState(false);
 
   // 🔗 Verifica se tem alguma URL disponível
@@ -230,7 +232,7 @@ export const ProjectCard3D = ({ title, description, icon, stack, imageUrl, liveU
           {!imageUrl && <ProjectImageIcon>{icon}</ProjectImageIcon>}
           {/* Indicador de clique quando tem URL */}
           <ClickIndicator $visible={hasUrl}>
-            {liveUrl ? '🔗 Ver Site' : '📁 Ver Código'}
+            {liveUrl ? `🔗 ${t('projects.cta.demo')}` : `📁 ${t('projects.cta.code')}`}
           </ClickIndicator>
         </ProjectImage>
         <ProjectContent>
