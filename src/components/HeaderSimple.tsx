@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { LanguageToggleSimple } from './LanguageToggleSimple';
+import { LanguageToggle } from './LanguageToggle';
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -236,7 +236,7 @@ export const HeaderSimple = () => {
         </DesktopNavLinks>
 
         <HeaderControls>
-          <LanguageToggleSimple />
+          <LanguageToggle />
           <MobileMenuButton onClick={toggleMobileMenu}>
             {isMobileMenuOpen ? '✕' : '☰'}
           </MobileMenuButton>
