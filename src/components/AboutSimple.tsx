@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { ScrollReveal } from './ScrollReveal';
 
 const AboutContainer = styled.section`
@@ -157,6 +158,8 @@ const SkillsTitle = styled.h3`
 `;
 
 export const AboutSimple = () => {
+  const { t } = useTranslation();
+  
   const skills = [
     // Frontend Core
     {
@@ -245,34 +248,31 @@ export const AboutSimple = () => {
     <AboutContainer id="about">
       <Container>
         <ScrollReveal>
-          <Title>Sobre Mim</Title>
+          <Title>{t('about.title')}</Title>
         </ScrollReveal>
 
         <Content>
           <ScrollReveal direction="left">
             <TextContent>
               <Description>
-                <HighlightText>Desenvolvedor Full Stack</HighlightText> com formação intensiva na Trybe e
-                atualmente cursando <HighlightText>Análise e Desenvolvimento de Sistemas</HighlightText>.
-                Experiência sólida em React.js, Node.js, TypeScript, Firebase e desenvolvimento de APIs REST.
+                <HighlightText>{t('about.description1Highlight')}</HighlightText> {t('about.description1')} <HighlightText>{t('about.description1Course')}</HighlightText>{t('about.description1End')}
               </Description>
 
               <Description>
-                Em constante evolução profissional, venho expandindo meus conhecimentos através de
-                <HighlightText> cursos especializados em Blockchain</HighlightText> e tecnologias emergentes,
-                sempre buscando me manter atualizado com as tendências do mercado tech.
+                {t('about.description2')}
+                <HighlightText>{t('about.description2Highlight')}</HighlightText>
+                {t('about.description2End')}
               </Description>
 
               <Description>
-                Busco oportunidades como <HighlightText>Desenvolvedor Júnior </HighlightText>
-                para aplicar minhas habilidades técnicas em projetos desafiadores, colaborando com equipes
-                ágeis no desenvolvimento de <HighlightText>soluções inovadoras e escaláveis</HighlightText>.
+                {t('about.description3')} <HighlightText>{t('about.description3Highlight')}</HighlightText>
+                {t('about.description3Middle')} <HighlightText>{t('about.description3End')}</HighlightText>.
               </Description>
 
               <Description>
-                Meu objetivo é contribuir como Desenvolvedor Front-End ou Full Stack Júnior em um
-                <HighlightText> ambiente colaborativo</HighlightText>, aplicando boas práticas de código,
-                foco em performance e experiência do usuário em aplicações modernas.
+                {t('about.description4')}
+                <HighlightText>{t('about.description4Highlight')}</HighlightText>
+                {t('about.description4End')}
               </Description>
             </TextContent>
           </ScrollReveal>
@@ -280,7 +280,7 @@ export const AboutSimple = () => {
           <ScrollReveal direction="right" delay={0.3}>
             <div>
               <SkillsTitle>
-                Tecnologias & Ferramentas
+                {t('about.skillsTitle')}
               </SkillsTitle>
 
               <ScrollReveal delay={0.5}>
