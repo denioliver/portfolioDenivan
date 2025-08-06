@@ -1,6 +1,7 @@
 import { useTypewriter, Cursor } from 'react-simple-typewriter';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 // 💎 Estilização do texto typewriter com fonte mais chamativa
 const TypewriterText = styled(motion.span)`
@@ -46,14 +47,7 @@ const TypewriterContainer = styled.div`
   }
 `;
 
-// 🔥 Frases que demonstram expertise técnica
-const techPhrases = [
-  'Desenvolvedor FullStack Especialista',
-  'Expert em React & Node.js',
-  'Criador de Soluções Completas',
-  'Arquiteto de Sistemas Modernos',
-  'Especialista em Front & Back-end'
-]; interface TypewriterEffectProps {
+interface TypewriterEffectProps {
   speed?: number;
   deleteSpeed?: number;
   delaySpeed?: number;
@@ -73,6 +67,16 @@ export const TypewriterEffect = ({
   deleteSpeed = 50,
   delaySpeed = 2000
 }: TypewriterEffectProps) => {
+  const { t } = useTranslation();
+
+  // 🎯 Obter frases traduzidas
+  const techPhrases = t('home.typewriter', { returnObjects: true }) as string[] || [
+    'Desenvolvedor FullStack Especialista',
+    'Expert em React & Node.js',
+    'Criador de Soluções Completas',
+    'Arquiteto de Sistemas Modernos',
+    'Especialista em Front & Back-end'
+  ];
 
   // 🎯 Hook do typewriter com configurações otimizadas
   const [text] = useTypewriter({

@@ -16,6 +16,8 @@ import { ProtectedRoute } from './routes/ProtectedRoute';
 import { AuthProvider } from './hooks/useAuth';
 import { ThemeContextProvider, useTheme } from './contexts/ThemeContext';
 import { setupFirestoreCollections } from './scripts/setupFirestore';
+import { I18nWrapper } from './components/I18nWrapper';
+import './i18n/i18n'; // Importar configuração do i18n
 
 function App() {
   return (
@@ -74,32 +76,34 @@ function AppContent() {
   );
 
   return (
-    <Router>
-      <AuthProvider>
-        <ThemeProvider theme={currentTheme}>
-          <GlobalStyles theme={currentTheme} />
+    <I18nWrapper>
+      <Router>
+        <AuthProvider>
+          <ThemeProvider theme={currentTheme}>
+            <GlobalStyles theme={currentTheme} />
 
-          {/* 🌟 Splash Screen - só aparece na primeira visita */}
-          {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
+            {/* 🌟 Splash Screen - só aparece na primeira visita */}
+            {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
 
-          {/* 🔀 Sistema de Rotas */}
-          {!showSplash && (
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<Login />} />
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-            </Routes>
-          )}
-        </ThemeProvider>
-      </AuthProvider>
-    </Router>
+            {/* 🔀 Sistema de Rotas */}
+            {!showSplash && (
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<Login />} />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+              </Routes>
+            )}
+          </ThemeProvider>
+        </AuthProvider>
+      </Router>
+    </I18nWrapper>
   );
 }
 

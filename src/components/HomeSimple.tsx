@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { AnimatedCube } from './AnimatedCube';
 import { ParticlesBackground } from './ParticlesBackground';
 import { TypewriterEffect } from './TypewriterEffect';
@@ -247,6 +248,8 @@ const Button = styled.button`
 `;
 
 export const HomeSimple = () => {
+  const { t } = useTranslation();
+
   // 🎯 Scroll suave para a seção de contato
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
@@ -278,9 +281,9 @@ export const HomeSimple = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            <Greeting>Olá, eu sou</Greeting>
-            <MainTitle>Denivan Oliveira</MainTitle>
-            <SubTitle>Desenvolvedor FullStack</SubTitle>
+            <Greeting>{t('home.greeting')}</Greeting>
+            <MainTitle>{t('home.name')}</MainTitle>
+            <SubTitle>{t('home.title')}</SubTitle>
           </motion.div>
 
           {/* ⚡ Efeito typewriter para destaque técnico */}
@@ -292,8 +295,7 @@ export const HomeSimple = () => {
             transition={{ duration: 0.6, delay: 1.2 }}
           >
             <Description>
-              Especialista em React, TypeScript, Node.js e tecnologias modernas.
-              Transformando ideias em soluções digitais inovadoras.
+              {t('home.description')}
             </Description>
           </motion.div>
 
@@ -302,7 +304,7 @@ export const HomeSimple = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.5 }}
           >
-            <Button onClick={scrollToContact}>Vamos conversar!</Button>
+            <Button onClick={scrollToContact}>{t('home.cta.contact')}</Button>
           </motion.div>
         </ScrollReveal>
       </LeftSection>

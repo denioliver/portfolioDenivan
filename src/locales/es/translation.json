@@ -1,0 +1,172 @@
+{
+  "header": {
+    "logo": "Denivan.dev",
+    "nav": {
+      "home": "Inicio",
+      "about": "Acerca",
+      "projects": "Proyectos",
+      "contact": "Contacto",
+      "admin": "Admin"
+    }
+  },
+  "home": {
+    "greeting": "Hola, soy",
+    "name": "Denivan Oliveira",
+    "title": "Desarrollador Full Stack",
+    "subtitle": "Creando experiencias digitales increíbles",
+    "description": "Experto en desarrollo web moderno con React, TypeScript, Node.js y Firebase. Transformo ideas en soluciones digitales elegantes y eficientes.",
+    "cta": {
+      "projects": "Ver Proyectos",
+      "contact": "¡Hablemos!"
+    },
+    "scroll": "Desplazarse hacia abajo",
+    "typewriter": [
+      "Desarrollador Frontend",
+      "Especialista React",
+      "Diseñador UI/UX",
+      "Entusiasta TypeScript",
+      "Creador de Experiencias"
+    ]
+  },
+  "about": {
+    "title": "Acerca de Mí",
+    "subtitle": "Quién soy y qué hago",
+    "greeting": "¡Hola! Soy Denivan",
+    "description": "Soy un desarrollador full stack apasionado por crear experiencias digitales que marquen la diferencia. Con más de 3 años de experiencia, me especializo en React, TypeScript y Node.js.",
+    "passion": "Mi pasión es transformar ideas complejas en interfaces simples e intuitivas, siempre enfocándome en la experiencia del usuario y la calidad del código.",
+    "approach": {
+      "title": "Mi Enfoque",
+      "items": [
+        "🎯 Enfoque en la experiencia del usuario",
+        "⚡ Rendimiento y optimización",
+        "🧩 Código limpio y mantenible",
+        "🚀 Tecnologías modernas",
+        "🤝 Colaboración en equipo"
+      ]
+    },
+    "skills": {
+      "title": "Habilidades Principales",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "tools": "Herramientas"
+    },
+    "experience": {
+      "title": "Experiencia",
+      "years": "3+",
+      "yearsLabel": "Años de experiencia",
+      "projects": "50+",
+      "projectsLabel": "Proyectos completados",
+      "clients": "30+",
+      "clientsLabel": "Clientes satisfechos"
+    }
+  },
+  "projects": {
+    "title": "Mis Proyectos",
+    "subtitle": "Una colección de mis trabajos más recientes",
+    "filter": {
+      "all": "Todos",
+      "web": "Apps Web",
+      "mobile": "Móvil",
+      "ui": "UI/UX"
+    },
+    "cta": {
+      "demo": "Ver Demo",
+      "code": "Ver Código"
+    },
+    "loading": "Cargando proyectos...",
+    "empty": "No se encontraron proyectos",
+    "error": "Error al cargar proyectos"
+  },
+  "contact": {
+    "title": "Hablemos",
+    "subtitle": "¿Tienes un proyecto en mente? ¡Hagámoslo realidad!",
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Tu nombre completo",
+      "email": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "subject": "Asunto",
+      "subjectPlaceholder": "¿De qué te gustaría hablar?",
+      "message": "Mensaje",
+      "messagePlaceholder": "Cuéntame más sobre tu proyecto...",
+      "submit": "Enviar Mensaje",
+      "sending": "Enviando..."
+    },
+    "info": {
+      "title": "Información de Contacto",
+      "description": "Siempre estoy abierto a nuevas oportunidades y conversaciones interesantes.",
+      "email": "Email",
+      "location": "Ubicación",
+      "locationValue": "Brasil",
+      "availability": "Disponibilidad",
+      "availabilityValue": "Disponible para proyectos"
+    },
+    "social": {
+      "title": "Redes Sociales",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "twitter": "Twitter"
+    },
+    "success": "¡Mensaje enviado con éxito!",
+    "error": "Error al enviar el mensaje. Inténtalo de nuevo."
+  },
+  "login": {
+    "title": "Acceso Admin",
+    "subtitle": "Accede al panel para gestionar tus proyectos",
+    "backToPortfolio": "Volver al Portafolio",
+    "form": {
+      "email": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Ingresa tu contraseña",
+      "submit": "Iniciar Sesión"
+    },
+    "loading": "Iniciando sesión...",
+    "adminInfo": {
+      "title": "🔐 ¡Hola! Esta es mi área administrativa",
+      "description": "¡Hola! Aquí es donde yo, Denivan, cuido todo el contenido de mi portafolio. Es como el backstage de un teatro - ¡aquí es donde sucede la magia! ✨",
+      "features": {
+        "title": "Si pudieras entrar aquí, verías:",
+        "items": [
+          "📁 Donde agrego mis nuevos proyectos (y a veces elimino los que ya no me gustan 😅)",
+          "🖼️ Subo las imágenes más hermosas de mis trabajos",
+          "📝 Donde escribo y reescribo las descripciones hasta que quedan perfectas",
+          "🔗 Organizo todos los enlaces de proyectos y repositorios",
+          "📊 Veo quién visita mi portafolio (de forma anónima, ¡por supuesto!)",
+          "💬 Leo todos los comentarios que me envían - ¡me encanta recibirlos!"
+        ]
+      },
+      "conclusion": "Es mi rincón especial, protegido con Firebase. ¡Solo yo tengo la llave! 🔐"
+    }
+  },
+  "dashboard": {
+    "title": "Panel de Control",
+    "welcome": "¡Bienvenido de vuelta!",
+    "stats": {
+      "projects": "Proyectos",
+      "views": "Visualizaciones",
+      "messages": "Mensajes"
+    },
+    "actions": {
+      "newProject": "Nuevo Proyecto",
+      "editProject": "Editar Proyecto",
+      "deleteProject": "Eliminar Proyecto",
+      "logout": "Cerrar Sesión"
+    }
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Guardar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "close": "Cerrar",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "viewMore": "Ver más",
+    "viewLess": "Ver menos"
+  }
+}

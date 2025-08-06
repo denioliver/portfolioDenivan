@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { signIn } from '../services/auth';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { LanguageToggle } from '../components/LanguageToggle';
 import { useTheme } from '../contexts/ThemeContext';
 // import { AuthDebugger } from '../components/AuthDebugger'; // Desabilitado temporariamente
 
@@ -87,10 +89,13 @@ const BackButton = styled(Link)`
   }
 `;
 
-const ThemeToggleContainer = styled.div`
+const HeaderControls = styled.div`
   position: absolute;
   top: 2rem;
   right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   z-index: 999;
 `;
 
@@ -237,6 +242,7 @@ const FeatureItem = styled.li`
 `;
 
 export const Login = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -277,32 +283,33 @@ export const Login = () => {
   return (
     <LoginContainer>
       <BackButton to="/">
-        ← Voltar ao Portfólio
+        ← {t('login.backToPortfolio')}
       </BackButton>
 
-      <ThemeToggleContainer>
+      <HeaderControls>
+        <LanguageToggle />
         <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
-      </ThemeToggleContainer>
+      </HeaderControls>
 
       <LoginCard
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <Title>Admin Login</Title>
+        <Title>{t('login.title')}</Title>
         <Subtitle>
-          Acesse o painel para gerenciar seus projetos
+          {t('login.subtitle')}
         </Subtitle>
 
         <LoginContent>
           <FormSection>
             <Form onSubmit={handleSubmit}>
               <FormGroup>
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t('login.form.email')}</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="seu@email.com"
+                  placeholder={t('login.form.emailPlaceholder')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -310,11 +317,11 @@ export const Login = () => {
               </FormGroup>
 
               <FormGroup>
-                <Label htmlFor="password">Senha</Label>
+                <Label htmlFor="password">{t('login.form.password')}</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Digite sua senha"
+                  placeholder={t('login.form.passwordPlaceholder')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -324,32 +331,28 @@ export const Login = () => {
               {error && <ErrorMessage>{error}</ErrorMessage>}
 
               <LoginButton type="submit" disabled={isLoading}>
-                {isLoading ? 'Entrando...' : 'Entrar'}
+                {isLoading ? t('login.loading') : t('login.form.submit')}
               </LoginButton>
             </Form>
           </FormSection>
 
           <AdminInfo>
             <InfoTitle>
-              � Olá! Esta é minha área administrativa
+              {t('login.adminInfo.title')}
             </InfoTitle>
             <InfoDescription>
-              Oi! Aqui é onde eu, Denivan, cuido de todo o conteúdo do meu portfólio.
-              É como os bastidores de um teatro - aqui acontece a magia! ✨
+              {t('login.adminInfo.description')}
             </InfoDescription>
             <InfoDescription>
-              <strong>Se você pudesse entrar aqui, veria:</strong>
+              <strong>{t('login.adminInfo.features.title')}</strong>
             </InfoDescription>
             <FeatureList>
-              <FeatureItem>📁 Onde eu adiciono meus novos projetos (e às vezes removo os que não gosto mais 😅)</FeatureItem>
-              <FeatureItem>🖼️ Upload das imagens mais bonitas dos meus trabalhos</FeatureItem>
-              <FeatureItem>📝 Onde escrevo e reescrevo as descrições até ficarem perfeitas</FeatureItem>
-              <FeatureItem>🔗 Organizo todos os links dos projetos e repositórios</FeatureItem>
-              <FeatureItem>📊 Fico vendo quem visita meu portfólio (de forma anônima, claro!)</FeatureItem>
-              <FeatureItem>💬 Leio todos os feedbacks que vocês mandam - adoro receber!</FeatureItem>
+              {(t('login.adminInfo.features.items', { returnObjects: true }) as string[]).map((item: string, index: number) => (
+                <FeatureItem key={index}>{item}</FeatureItem>
+              ))}
             </FeatureList>
             <InfoDescription>
-              <em>É meu cantinho especial, protegido com Firebase. Só eu tenho a chave! 🔐</em>
+              <em>{t('login.adminInfo.conclusion')}</em>
             </InfoDescription>
           </AdminInfo>
         </LoginContent>

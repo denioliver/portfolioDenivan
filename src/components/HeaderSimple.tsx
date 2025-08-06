@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { LanguageToggleSimple } from './LanguageToggleSimple';
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -53,6 +55,16 @@ const DesktopNavLinks = styled.div`
 
   @media (max-width: 768px) {
     display: none;
+  }
+`;
+
+const HeaderControls = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  
+  @media (max-width: 768px) {
+    gap: 0.5rem;
   }
 `;
 
@@ -152,6 +164,7 @@ const NavLink = styled.a`
 `;
 
 export const HeaderSimple = () => {
+  const { t } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -206,42 +219,45 @@ export const HeaderSimple = () => {
 
         <DesktopNavLinks>
           <NavLink onClick={() => scrollToSection('home')}>
-            Início
+            {t('header.nav.home')}
           </NavLink>
           <NavLink onClick={() => scrollToSection('about')}>
-            Sobre
+            {t('header.nav.about')}
           </NavLink>
           <NavLink onClick={() => scrollToSection('projects')}>
-            Projetos
+            {t('header.nav.projects')}
           </NavLink>
           <NavLink onClick={() => scrollToSection('contact')}>
-            Contato
+            {t('header.nav.contact')}
           </NavLink>
           <LoginButton onClick={handleLoginClick}>
-            Admin
+            {t('header.nav.admin')}
           </LoginButton>
         </DesktopNavLinks>
 
-        <MobileMenuButton onClick={toggleMobileMenu}>
-          {isMobileMenuOpen ? '✕' : '☰'}
-        </MobileMenuButton>
+        <HeaderControls>
+          <LanguageToggleSimple />
+          <MobileMenuButton onClick={toggleMobileMenu}>
+            {isMobileMenuOpen ? '✕' : '☰'}
+          </MobileMenuButton>
+        </HeaderControls>
       </Nav>
 
       <MobileNavLinks isOpen={isMobileMenuOpen}>
         <NavLink onClick={() => scrollToSection('home')}>
-          Início
+          {t('header.nav.home')}
         </NavLink>
         <NavLink onClick={() => scrollToSection('about')}>
-          Sobre
+          {t('header.nav.about')}
         </NavLink>
         <NavLink onClick={() => scrollToSection('projects')}>
-          Projetos
+          {t('header.nav.projects')}
         </NavLink>
         <NavLink onClick={() => scrollToSection('contact')}>
-          Contato
+          {t('header.nav.contact')}
         </NavLink>
         <LoginButton onClick={handleLoginClick}>
-          Admin
+          {t('header.nav.admin')}
         </LoginButton>
       </MobileNavLinks>
     </HeaderContainer>

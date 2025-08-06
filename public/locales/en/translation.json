@@ -1,0 +1,172 @@
+{
+  "header": {
+    "logo": "Denivan.dev",
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "projects": "Projects",
+      "contact": "Contact",
+      "admin": "Admin"
+    }
+  },
+  "home": {
+    "greeting": "Hello, I'm",
+    "name": "Denivan Oliveira",
+    "title": "Full Stack Developer",
+    "subtitle": "Creating amazing digital experiences",
+    "description": "Expert in modern web development with React, TypeScript, Node.js and Firebase. I transform ideas into elegant and efficient digital solutions.",
+    "cta": {
+      "projects": "View Projects",
+      "contact": "Let's talk!"
+    },
+    "scroll": "Scroll down",
+    "typewriter": [
+      "Frontend Developer",
+      "React Specialist",
+      "UI/UX Designer",
+      "TypeScript Enthusiast",
+      "Experience Creator"
+    ]
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Who I am and what I do",
+    "greeting": "Hello! I'm Denivan",
+    "description": "I'm a full stack developer passionate about creating digital experiences that make a difference. With over 3 years of experience, I specialize in React, TypeScript and Node.js.",
+    "passion": "My passion is transforming complex ideas into simple and intuitive interfaces, always focusing on user experience and code quality.",
+    "approach": {
+      "title": "My Approach",
+      "items": [
+        "🎯 Focus on user experience",
+        "⚡ Performance and optimization",
+        "🧩 Clean and maintainable code",
+        "🚀 Modern technologies",
+        "🤝 Team collaboration"
+      ]
+    },
+    "skills": {
+      "title": "Key Skills",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "tools": "Tools"
+    },
+    "experience": {
+      "title": "Experience",
+      "years": "3+",
+      "yearsLabel": "Years of experience",
+      "projects": "50+",
+      "projectsLabel": "Completed projects",
+      "clients": "30+",
+      "clientsLabel": "Satisfied clients"
+    }
+  },
+  "projects": {
+    "title": "My Projects",
+    "subtitle": "A collection of my most recent work",
+    "filter": {
+      "all": "All",
+      "web": "Web Apps",
+      "mobile": "Mobile",
+      "ui": "UI/UX"
+    },
+    "cta": {
+      "demo": "View Demo",
+      "code": "View Code"
+    },
+    "loading": "Loading projects...",
+    "empty": "No projects found",
+    "error": "Error loading projects"
+  },
+  "contact": {
+    "title": "Let's Talk",
+    "subtitle": "Have a project in mind? Let's make it reality!",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "What would you like to talk about?",
+      "message": "Message",
+      "messagePlaceholder": "Tell me more about your project...",
+      "submit": "Send Message",
+      "sending": "Sending..."
+    },
+    "info": {
+      "title": "Contact Information",
+      "description": "I'm always open to new opportunities and interesting conversations.",
+      "email": "Email",
+      "location": "Location",
+      "locationValue": "Brazil",
+      "availability": "Availability",
+      "availabilityValue": "Available for projects"
+    },
+    "social": {
+      "title": "Social Media",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "twitter": "Twitter"
+    },
+    "success": "Message sent successfully!",
+    "error": "Error sending message. Please try again."
+  },
+  "login": {
+    "title": "Admin Login",
+    "subtitle": "Access the panel to manage your projects",
+    "backToPortfolio": "Back to Portfolio",
+    "form": {
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Sign In"
+    },
+    "loading": "Signing in...",
+    "adminInfo": {
+      "title": "🔐 Hello! This is my administrative area",
+      "description": "Hi! This is where I, Denivan, take care of all the content of my portfolio. It's like the backstage of a theater - this is where the magic happens! ✨",
+      "features": {
+        "title": "If you could get in here, you would see:",
+        "items": [
+          "📁 Where I add my new projects (and sometimes remove the ones I don't like anymore 😅)",
+          "🖼️ Upload the most beautiful images of my work",
+          "📝 Where I write and rewrite descriptions until they're perfect",
+          "🔗 Organize all project and repository links",
+          "📊 I keep seeing who visits my portfolio (anonymously, of course!)",
+          "💬 I read all the feedback you send - I love receiving it!"
+        ]
+      },
+      "conclusion": "It's my special corner, protected with Firebase. Only I have the key! 🔐"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back!",
+    "stats": {
+      "projects": "Projects",
+      "views": "Views",
+      "messages": "Messages"
+    },
+    "actions": {
+      "newProject": "New Project",
+      "editProject": "Edit Project",
+      "deleteProject": "Delete Project",
+      "logout": "Logout"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous",
+    "viewMore": "View more",
+    "viewLess": "View less"
+  }
+}
