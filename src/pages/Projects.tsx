@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { getProjects } from '../services/firestore';
+import { getProjectTranslation } from '../utils/projectTranslationsMap';
 import type { Project } from '../services/firestore';
 
 // Função para carregar imagem local baseada no título do projeto
@@ -139,11 +141,13 @@ const EmptyIcon = styled.div`
 `;
 
 export const Projects = () => {
+  const { t, i18n } = useTranslation();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   console.log('🏠 Componente Projects renderizado, projects:', projects); // Debug
+  console.log('🌍 Idioma atual:', i18n.language); // Debug
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -175,14 +179,14 @@ export const Projects = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            Meus Projetos
+            {t('projects.title')}
           </Title>
           <LoadingMessage
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Carregando projetos...
+            {t('projects.loading')}
           </LoadingMessage>
         </Container>
       </ProjectsSection>
@@ -198,7 +202,7 @@ export const Projects = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            Meus Projetos
+            {t('projects.title')}
           </Title>
           <ErrorMessage
             initial={{ opacity: 0 }}
@@ -220,7 +224,7 @@ export const Projects = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          Meus Projetos
+          {t('projects.title')}
         </Title>
 
         {projects.length === 0 ? (
@@ -230,39 +234,52 @@ export const Projects = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <EmptyIcon>📁</EmptyIcon>
-            <h3>Nenhum projeto encontrado</h3>
+            <h3>{t('projects.empty')}</h3>
             <p>Os projetos serão exibidos aqui em breve!</p>
           </EmptyState>
         ) : (
           <ProjectsGrid>
             <AnimatePresence>
-              {projects.map((project, index) => (
-                <ProjectCard
-                  key={project.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -50 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: index * 0.1,
-                  }}
-                  whileHover={{ scale: 1.02 }}
-                  layout
-                >
-                  <ProjectImage
-                    imageUrl={getProjectImage(project.title)}
-                  />
-                  <ProjectContent>
-                    <ProjectName>{project.title}</ProjectName>
-                    <ProjectDescription>{project.description}</ProjectDescription>
-                    <TechTags>
-                      {project.technologies.map((tech) => (
-                        <TechTag key={tech}>{tech}</TechTag>
-                      ))}
-                    </TechTags>
-                  </ProjectContent>
-                </ProjectCard>
-              ))}
+              {projects.map((project, index) => {
+                // 🌍 Obter tradução do projeto baseada no código ou título
+                const currentLang = i18n.language as 'pt' | 'en' | 'es';
+                const translatedProject = getProjectTranslation(
+                  project.code,
+                  project.title,
+                  project.description,
+                  currentLang
+                );
+
+                console.log(`🔄 Traduzindo projeto "${project.title}" (code: ${project.code}) para ${currentLang}:`, translatedProject);
+
+                return (
+                  <ProjectCard
+                    key={project.id}
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -50 }}
+                    transition={{
+                      duration: 0.6,
+                      delay: index * 0.1,
+                    }}
+                    whileHover={{ scale: 1.02 }}
+                    layout
+                  >
+                    <ProjectImage
+                      imageUrl={getProjectImage(project.title)}
+                    />
+                    <ProjectContent>
+                      <ProjectName>{translatedProject.name}</ProjectName>
+                      <ProjectDescription>{translatedProject.description}</ProjectDescription>
+                      <TechTags>
+                        {project.technologies.map((tech) => (
+                          <TechTag key={tech}>{tech}</TechTag>
+                        ))}
+                      </TechTags>
+                    </ProjectContent>
+                  </ProjectCard>
+                );
+              })}
             </AnimatePresence>
           </ProjectsGrid>
         )}

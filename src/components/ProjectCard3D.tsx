@@ -158,8 +158,13 @@ export const ProjectCard3D = ({ title, description, icon, stack, imageUrl, liveU
   const { t, i18n } = useTranslation();
   const [showStack, setShowStack] = useState(false);
 
+  // 🚨 DEBUG: Log crítico para debugar
+  console.warn(`🔍 ProjectCard3D renderizado: "${title}" | Idioma: ${i18n.language}`);
+
   // 🌍 Sistema de tradução dos projetos
   const getTranslatedProject = (originalTitle: string, originalDescription: string) => {
+    console.log('🔍 Iniciando tradução para:', { originalTitle, currentLang: i18n.language });
+
     const translations: Record<string, {
       title: { pt: string; en: string; es: string };
       description: { pt: string; en: string; es: string };
@@ -237,21 +242,141 @@ export const ProjectCard3D = ({ title, description, icon, stack, imageUrl, liveU
     };
 
     const projectTranslation = translations[originalTitle];
+    console.log('🔍 Buscando tradução específica para:', originalTitle);
+    console.log('🔍 Encontrado:', !!projectTranslation);
+
     if (projectTranslation) {
       const lang = i18n.language as 'pt' | 'en' | 'es';
+      console.log('✅ Usando tradução específica para idioma:', lang);
       return {
         title: projectTranslation.title[lang] || projectTranslation.title.pt,
         description: projectTranslation.description[lang] || projectTranslation.description.pt
       };
     }
 
-    // Se não tiver tradução, retorna o original
-    return { title: originalTitle, description: originalDescription };
+    // 🤖 Sistema de tradução automática para projetos novos
+    const currentLang = i18n.language as 'pt' | 'en' | 'es';
+    console.log('🤖 Projeto não encontrado nas traduções manuais. Aplicando tradução automática...');
+
+    // Se estiver em português, retorna o original
+    if (currentLang === 'pt') {
+      console.log('✅ Idioma é PT, retornando original');
+      return { title: originalTitle, description: originalDescription };
+    }
+
+    // Traduções automáticas básicas
+    const autoTranslateText = (text: string, targetLang: 'en' | 'es'): string => {
+      let translated = text;
+      console.log(`🔄 Traduzindo "${text}" para ${targetLang}`);
+
+      if (targetLang === 'en') {
+        // Mapeamentos PT -> EN (mais completo)
+        const translations: Record<string, string> = {
+          // Palavras principais
+          'Sistema': 'System', 'Aplicação': 'Application', 'App': 'App',
+          'Projeto': 'Project', 'Site': 'Website', 'Portal': 'Portal',
+          'Dashboard': 'Dashboard', 'Plataforma': 'Platform', 'Loja': 'Store',
+          'E-commerce': 'E-commerce', 'Blog': 'Blog', 'API': 'API',
+          'Gerenciador': 'Manager', 'Calculadora': 'Calculator',
+          'Conversor': 'Converter', 'Editor': 'Editor', 'Catálogo': 'Catalog',
+          'Portfólio': 'Portfolio', 'Teste': 'Test', 'Exemplo': 'Example',
+          'Demo': 'Demo', 'Protótipo': 'Prototype', 'Novo': 'New',
+          'Página': 'Page', 'Interface': 'Interface', 'Layout': 'Layout',
+          // Verbos e adjetivos
+          'desenvolvido': 'developed', 'criado': 'created', 'feito': 'made',
+          'construído': 'built', 'implementado': 'implemented',
+          'testando': 'testing', 'traduzindo': 'translating', 'verificando': 'checking',
+          'aplicação': 'application', 'sistema': 'system', 'projeto': 'project',
+          'funcional': 'functional', 'responsivo': 'responsive', 'moderno': 'modern',
+          'completo': 'complete', 'simples': 'simple', 'avançado': 'advanced',
+          'dinâmico': 'dynamic', 'interativo': 'interactive', 'básico': 'basic',
+          'novo': 'new', 'teste': 'test', 'exemplo': 'example',
+          'traduções': 'translations', 'tradução': 'translation', 'projetos': 'projects',
+          'dos': 'of the', 'das': 'of the', 'do': 'of the', 'da': 'of the',
+          'as': 'the', 'os': 'the', 'um': 'a', 'uma': 'a',
+          // Preposições e conectores
+          'com': 'with', 'para': 'for', 'de': 'of', 'em': 'in',
+          'usando': 'using', 'utilizando': 'using', 'através': 'through',
+          'sobre': 'about', 'entre': 'between', 'dentro': 'inside'
+        };
+
+        Object.entries(translations).forEach(([pt, en]) => {
+          // Usa regex para buscar palavras inteiras
+          const regex = new RegExp(`\\b${pt}\\b`, 'gi');
+          translated = translated.replace(regex, en);
+        });
+      }
+
+      if (targetLang === 'es') {
+        // Mapeamentos PT -> ES (mais completo)
+        const translations: Record<string, string> = {
+          // Palavras principais
+          'Sistema': 'Sistema', 'Aplicação': 'Aplicación', 'App': 'App',
+          'Projeto': 'Proyecto', 'Site': 'Sitio', 'Portal': 'Portal',
+          'Dashboard': 'Dashboard', 'Plataforma': 'Plataforma', 'Loja': 'Tienda',
+          'E-commerce': 'E-commerce', 'Blog': 'Blog', 'API': 'API',
+          'Gerenciador': 'Gestor', 'Calculadora': 'Calculadora',
+          'Conversor': 'Convertidor', 'Editor': 'Editor', 'Catálogo': 'Catálogo',
+          'Portfólio': 'Portafolio', 'Teste': 'Prueba', 'Exemplo': 'Ejemplo',
+          'Demo': 'Demo', 'Protótipo': 'Prototipo', 'Novo': 'Nuevo',
+          'Página': 'Página', 'Interface': 'Interfaz', 'Layout': 'Diseño',
+          // Verbos e adjetivos
+          'desenvolvido': 'desarrollado', 'criado': 'creado', 'feito': 'hecho',
+          'construído': 'construido', 'implementado': 'implementado',
+          'testando': 'probando', 'traduzindo': 'traduciendo', 'verificando': 'verificando',
+          'aplicação': 'aplicación', 'sistema': 'sistema', 'projeto': 'proyecto',
+          'funcional': 'funcional', 'responsivo': 'responsivo', 'moderno': 'moderno',
+          'completo': 'completo', 'simples': 'simple', 'avançado': 'avanzado',
+          'dinâmico': 'dinámico', 'interativo': 'interactivo', 'básico': 'básico',
+          'novo': 'nuevo', 'teste': 'prueba', 'exemplo': 'ejemplo',
+          'traduções': 'traducciones', 'tradução': 'traducción', 'projetos': 'proyectos',
+          'dos': 'de los', 'das': 'de las', 'do': 'del', 'da': 'de la',
+          'as': 'las', 'os': 'los', 'um': 'un', 'uma': 'una',
+          // Preposições e conectores
+          'com': 'con', 'para': 'para', 'de': 'de', 'em': 'en',
+          'usando': 'usando', 'utilizando': 'utilizando', 'através': 'através',
+          'sobre': 'sobre', 'entre': 'entre', 'dentro': 'dentro'
+        };
+
+        Object.entries(translations).forEach(([pt, es]) => {
+          // Usa regex para buscar palavras inteiras
+          const regex = new RegExp(`\\b${pt}\\b`, 'gi');
+          translated = translated.replace(regex, es);
+        });
+      }
+
+      console.log(`✅ Resultado da tradução: "${translated}"`);
+      return translated;
+    };
+
+    console.log(`🔄 Auto-traduzindo projeto "${originalTitle}" para ${currentLang}`);
+
+    const result = {
+      title: autoTranslateText(originalTitle, currentLang),
+      description: autoTranslateText(originalDescription, currentLang)
+    };
+
+    console.log('🎯 Resultado final da tradução automática:', result);
+    return result;
   };
 
   const { title: translatedTitle, description: translatedDescription } = getTranslatedProject(title, description);
 
-  // 🔗 Verifica se tem alguma URL disponível
+  // 🧪 Indicador discreto para projetos com tradução automática (opcional)
+  const knownProjects = [
+    "Sistema de Agendamento para Estúdio de Tatuagem",
+    "Portfolio Antigo",
+    "Catálogo Nick Festas – Catálogo de Produtos",
+    "Desafio Psel Front – Consumo da API do IBGE",
+    "Calculadora",
+    "Portfolio Denivan"
+  ];
+
+  const isNewProject = !knownProjects.includes(title);
+  const testIndicator = isNewProject && i18n.language !== 'pt' ? '' : ''; // Remover [AUTO-XX] quando não precisar mais
+
+  const finalTitle = translatedTitle + testIndicator;
+  const finalDescription = translatedDescription;  // 🔗 Verifica se tem alguma URL disponível
   const hasUrl = !!(liveUrl || githubUrl);
 
   // 🔗 Função para lidar com o clique no card
@@ -320,7 +445,7 @@ export const ProjectCard3D = ({ title, description, icon, stack, imageUrl, liveU
 
         {/* 📸 Conteúdo principal do card */}
         <ProjectImage $hasImage={!!imageUrl}>
-          {imageUrl && <ProjectImageImg src={imageUrl} alt={translatedTitle} />}
+          {imageUrl && <ProjectImageImg src={imageUrl} alt={finalTitle} />}
           {/* Só mostra o ícone se não tiver imagem */}
           {!imageUrl && <ProjectImageIcon>{icon}</ProjectImageIcon>}
           {/* Indicador de clique quando tem URL */}
@@ -329,8 +454,8 @@ export const ProjectCard3D = ({ title, description, icon, stack, imageUrl, liveU
           </ClickIndicator>
         </ProjectImage>
         <ProjectContent>
-          <ProjectTitle>{translatedTitle}</ProjectTitle>
-          <ProjectDescription>{translatedDescription}</ProjectDescription>
+          <ProjectTitle>{finalTitle}</ProjectTitle>
+          <ProjectDescription>{finalDescription}</ProjectDescription>
         </ProjectContent>
       </TiltCard>
     </CardContainer>

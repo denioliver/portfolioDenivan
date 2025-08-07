@@ -14,6 +14,7 @@ import { db } from './firebase';
 
 export interface Project {
   id?: string;
+  code?: string; // Código único do projeto para tradução
   title: string;
   description: string;
   image: string;
