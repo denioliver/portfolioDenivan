@@ -26,7 +26,17 @@
       "UI/UX Designer",
       "TypeScript Enthusiast",
       "Experience Creator"
-    ]
+    ],
+    "cubeInteraction": {
+      "greeting": "Hey!",
+      "intro": "That cube over there isn't just decoration...",
+      "instructions": {
+        "hover": "Hover to see it grow",
+        "doubleClick": "Double click for a surprise",
+        "drag": "Drag it around the screen"
+      },
+      "tip": "Go ahead, try it!"
+    }
   },
   "about": {
     "title": "About Me",

@@ -26,7 +26,17 @@
       "Designer UI/UX",
       "Entusiasta TypeScript",
       "Criador de Experiências"
-    ]
+    ],
+    "cubeInteraction": {
+      "greeting": "Psiu!",
+      "intro": "Esse cubo ali não é só decoração...",
+      "instructions": {
+        "hover": "Passe o mouse pra ver ele crescer",
+        "doubleClick": "Dê 2 cliques pra uma surpresa",
+        "drag": "Arraste ele pela tela"
+      },
+      "tip": "Vai, experimenta!"
+    }
   },
   "about": {
     "title": "Sobre Mim",

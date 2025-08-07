@@ -19,13 +19,17 @@ const HomeContainer = styled.section`
   
   @media (max-width: 768px) {
     flex-direction: column;
+    align-items: stretch; /* Permite que as seções ocupem a largura total */
+  }
+
+  @media (max-width: 480px) {
     align-items: center;
   }
 `;
 
 // 🎯 Container do cubo - posicionado entre as seções
 const CubeContainer = styled.div`
-  /* Desktop: Absoluto entre as seções */
+  /* Desktop: Absoluto entre as seções, sem acompanhar scroll */
   position: absolute;
   top: 50%;
   left: 65%;
@@ -33,20 +37,33 @@ const CubeContainer = styled.div`
   z-index: 10;
   pointer-events: auto;
   
+  /* Esconde o cubo principal em mobile */
   @media (max-width: 768px) {
-    /* Mobile: Posicionado abaixo do botão */
-    position: absolute;
-    top: auto;
-    bottom: 0.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 5;
-    pointer-events: auto;
+    display: none;
   }
+  
+  /* Mobile: Cubo específico para mobile */
+  &.mobile-cube {
+    /* Desktop: Esconde o cubo mobile */
+    @media (min-width: 769px) {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      /* Mobile: Posicionado dentro da LeftSection, próximo ao botão */
+      position: static;
+      display: flex;
+      justify-content: center;
+      margin: -60px;
+      transform: none;
+      z-index: 5;
+      pointer-events: auto;
+    }
 
-  @media (max-width: 480px) {
-    /* Mobile muito pequeno: Ainda mais embaixo */
-    bottom: 0.2rem;
+    @media (max-width: 480px) {
+      /* Mobile muito pequeno: Ainda mais próximo */
+      margin: 10px;
+    }
   }
 `;
 
@@ -121,7 +138,13 @@ const RightSection = styled.div`
   }
 
   @media (max-width: 768px) {
-    display: none; /* Remove a seção direita no mobile */
+    flex: 0 0 100%; /* Ocupa largura total em tablet */
+
+    min-height: auto;
+  }
+
+  @media (max-width: 480px) {
+    display: none; /* Remove apenas em mobile muito pequeno */
   }
 `;
 
@@ -158,7 +181,11 @@ const InteractionText = styled.div`
 
   @media (max-width: 1200px) {
     font-size: 0.95rem;
-    padding: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    font-size: 1rem;
   }
 `;
 const Greeting = styled.div`
@@ -269,14 +296,14 @@ const Button = styled.button`
   @media (max-width: 768px) {
     padding: 0.9rem 2rem;
     font-size: 0.95rem;
-    margin: 0 auto 12rem auto;
+    margin: 0 auto;
     display: block;
   }
 
   @media (max-width: 480px) {
     padding: 0.8rem 1.5rem;
     font-size: 0.9rem;
-    margin: 0 auto 15rem auto;
+    margin: 0 auto;
   }
 `;
 
@@ -340,22 +367,29 @@ export const HomeSimple = () => {
             <Button onClick={scrollToContact}>{t('home.cta.contact')}</Button>
           </motion.div>
         </ScrollReveal>
+
+        {/* 🎯 Cubo posicionado após o botão apenas em mobile */}
+        <CubeContainer className="mobile-cube">
+          <ScrollReveal direction="up" delay={0.5}>
+            <AnimatedCube />
+          </ScrollReveal>
+        </CubeContainer>
       </LeftSection>
 
       <RightSection>
         <InteractionText>
-          <span className="highlight">Psiu!</span> <span className="emoji">👀</span>
+          <span className="highlight">{t('home.cubeInteraction.greeting')}</span> <span className="emoji">👀</span>
           <br />
-          Esse cubo ali não é só decoração...
+          {t('home.cubeInteraction.intro')}
           <br /><br />
-          <span className="highlight">Passe o mouse</span> pra ver ele crescer <span className="emoji">✨</span>
+          <span className="highlight">{t('home.cubeInteraction.instructions.hover')}</span> <span className="emoji">✨</span>
           <br />
-          <span className="highlight">Dê 2 cliques</span> pra uma surpresa <span className="emoji">💥</span>
+          <span className="highlight">{t('home.cubeInteraction.instructions.doubleClick')}</span> <span className="emoji">💥</span>
           <br />
-          <span className="highlight">Arraste ele</span> pela tela <span className="emoji">🎯</span>
+          <span className="highlight">{t('home.cubeInteraction.instructions.drag')}</span> <span className="emoji">🎯</span>
 
           <span className="tip">
-            Vai, experimenta! <span className="emoji">😄</span>
+            {t('home.cubeInteraction.tip')} <span className="emoji">😄</span>
           </span>
         </InteractionText>
       </RightSection>
