@@ -155,8 +155,101 @@ interface ProjectCardProps {
  * - Design glassmorphism moderno
  */
 export const ProjectCard3D = ({ title, description, icon, stack, imageUrl, liveUrl, githubUrl }: ProjectCardProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [showStack, setShowStack] = useState(false);
+
+  // 🌍 Sistema de tradução dos projetos
+  const getTranslatedProject = (originalTitle: string, originalDescription: string) => {
+    const translations: Record<string, {
+      title: { pt: string; en: string; es: string };
+      description: { pt: string; en: string; es: string };
+    }> = {
+      // === PROJETOS IDENTIFICADOS NO HTML ===
+      "Sistema de Agendamento para Estúdio de Tatuagem": {
+        title: {
+          pt: "Sistema de Agendamento para Estúdio de Tatuagem",
+          en: "Tattoo Studio Scheduling System",
+          es: "Sistema de Reservas para Estudio de Tatuajes"
+        },
+        description: {
+          pt: "Aplicação web desenvolvida para facilitar o agendamento de sessões de tatuagem, tanto para clientes quanto para tatuadores. A plataforma permite aos clientes escolherem horários disponíveis, visualizar portfólios dos tatuadores e enviar detalhes da tatuagem desejada. Para os administradores, oferece um painel com controle de agendamentos, notificações e gestão de usuários.",
+          en: "Web application developed to facilitate tattoo session scheduling for both clients and tattoo artists. The platform allows clients to choose available times, view artist portfolios and send details of the desired tattoo. For administrators, it offers a panel with appointment control, notifications and user management.",
+          es: "Aplicación web desarrollada para facilitar la programación de sesiones de tatuajes tanto para clientes como para tatuadores. La plataforma permite a los clientes elegir horarios disponibles, ver portafolios de tatuadores y enviar detalles del tatuaje deseado. Para administradores, ofrece un panel con control de citas, notificaciones y gestión de usuarios."
+        }
+      },
+      "Portfolio Antigo": {
+        title: {
+          pt: "Portfólio Antigo",
+          en: "Old Portfolio",
+          es: "Portafolio Antiguo"
+        },
+        description: {
+          pt: "Portfólio criado quando estava iniciando meus estudos em ReactJs",
+          en: "Portfolio created when I was starting my studies in ReactJs",
+          es: "Portafolio creado cuando estaba iniciando mis estudios en ReactJs"
+        }
+      },
+      "Catálogo Nick Festas – Catálogo de Produtos": {
+        title: {
+          pt: "Catálogo Nick Festas – Catálogo de Produtos",
+          en: "Nick Parties Catalog – Product Catalog",
+          es: "Catálogo Nick Fiestas – Catálogo de Productos"
+        },
+        description: {
+          pt: "Site institucional com listagem dinâmica de produtos. Layout leve, responsivo e fácil de atualizar. Demonstra uso de props, mapeamento de arrays e estilização modular em React.",
+          en: "Institutional website with dynamic product listing. Light, responsive layout that's easy to update. Demonstrates use of props, array mapping and modular styling in React.",
+          es: "Sitio web institucional con listado dinámico de productos. Diseño ligero, responsivo y fácil de actualizar. Demuestra el uso de props, mapeo de arrays y estilización modular en React."
+        }
+      },
+      "Desafio Psel Front – Consumo da API do IBGE": {
+        title: {
+          pt: "Desafio Psel Front – Consumo da API do IBGE",
+          en: "Frontend Challenge – IBGE API Consumption",
+          es: "Desafío Frontend – Consumo de API del IBGE"
+        },
+        description: {
+          pt: "Aplicação criada como desafio técnico de processo seletivo. Consome dados da API do IBGE, exibindo estados e cidades dinamicamente. Estrutura baseada em hooks, tipagem com TypeScript e boas práticas de manipulação de dados assíncronos.",
+          en: "Application created as a technical challenge for a selection process. Consumes data from the IBGE API, dynamically displaying states and cities. Structure based on hooks, TypeScript typing and best practices for asynchronous data handling.",
+          es: "Aplicación creada como desafío técnico de proceso selectivo. Consume datos de la API del IBGE, mostrando estados y ciudades dinámicamente. Estructura basada en hooks, tipado con TypeScript y buenas prácticas de manejo de datos asíncronos."
+        }
+      },
+      "Calculadora": {
+        title: {
+          pt: "Calculadora",
+          en: "Calculator",
+          es: "Calculadora"
+        },
+        description: {
+          pt: "Calculadora funcional com operações básicas, desenvolvida com componentes reutilizáveis e gerenciamento de estado via React. Interface limpa, responsiva e lógica matemática 100% funcional.",
+          en: "Functional calculator with basic operations, developed with reusable components and state management via React. Clean, responsive interface with 100% functional mathematical logic.",
+          es: "Calculadora funcional con operaciones básicas, desarrollada con componentes reutilizables y gestión de estado vía React. Interfaz limpia, responsiva y lógica matemática 100% funcional."
+        }
+      },
+      // === PROJETOS ADICIONAIS COMUNS ===
+      "Portfolio Denivan": {
+        title: { pt: "Portfólio Denivan", en: "Denivan Portfolio", es: "Portafolio Denivan" },
+        description: {
+          pt: "Portfólio pessoal desenvolvido com React, TypeScript, Firebase e Styled Components. Sistema completo com área administrativa.",
+          en: "Personal portfolio developed with React, TypeScript, Firebase and Styled Components. Complete system with admin area.",
+          es: "Portafolio personal desarrollado con React, TypeScript, Firebase y Styled Components. Sistema completo con área administrativa."
+        }
+      }
+    };
+
+    const projectTranslation = translations[originalTitle];
+    if (projectTranslation) {
+      const lang = i18n.language as 'pt' | 'en' | 'es';
+      return {
+        title: projectTranslation.title[lang] || projectTranslation.title.pt,
+        description: projectTranslation.description[lang] || projectTranslation.description.pt
+      };
+    }
+
+    // Se não tiver tradução, retorna o original
+    return { title: originalTitle, description: originalDescription };
+  };
+
+  const { title: translatedTitle, description: translatedDescription } = getTranslatedProject(title, description);
 
   // 🔗 Verifica se tem alguma URL disponível
   const hasUrl = !!(liveUrl || githubUrl);
@@ -227,7 +320,7 @@ export const ProjectCard3D = ({ title, description, icon, stack, imageUrl, liveU
 
         {/* 📸 Conteúdo principal do card */}
         <ProjectImage $hasImage={!!imageUrl}>
-          {imageUrl && <ProjectImageImg src={imageUrl} alt={title} />}
+          {imageUrl && <ProjectImageImg src={imageUrl} alt={translatedTitle} />}
           {/* Só mostra o ícone se não tiver imagem */}
           {!imageUrl && <ProjectImageIcon>{icon}</ProjectImageIcon>}
           {/* Indicador de clique quando tem URL */}
@@ -236,8 +329,8 @@ export const ProjectCard3D = ({ title, description, icon, stack, imageUrl, liveU
           </ClickIndicator>
         </ProjectImage>
         <ProjectContent>
-          <ProjectTitle>{title}</ProjectTitle>
-          <ProjectDescription>{description}</ProjectDescription>
+          <ProjectTitle>{translatedTitle}</ProjectTitle>
+          <ProjectDescription>{translatedDescription}</ProjectDescription>
         </ProjectContent>
       </TiltCard>
     </CardContainer>

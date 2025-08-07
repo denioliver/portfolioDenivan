@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ProjectCard3D } from './ProjectCard3D';
 import { ScrollReveal } from './ScrollReveal';
 import { getProjects } from '../services/firestore';
+import { logFirebaseProjects } from '../utils/checkProjects';
 import type { Project } from '../services/firestore';
 
 // Função para carregar imagem local baseada no título do projeto
@@ -114,8 +115,19 @@ export const ProjectsSimple = () => {
       try {
         setLoading(true);
         console.log('🔥 Buscando projetos do Firestore para ProjectsSimple...');
+
+        // Debug: verificar projetos do Firebase
+        await logFirebaseProjects();
+
         const projectsData = await getProjects();
         console.log('📊 Projetos carregados:', projectsData);
+        console.log('📊 Total de projetos:', projectsData.length);
+
+        // Debug: listar títulos dos projetos
+        projectsData.forEach((project, index) => {
+          console.log(`${index + 1}. "${project.title}" - ${project.description?.substring(0, 30)}...`);
+        });
+
         setProjects(projectsData);
       } catch (err) {
         console.error('❌ Erro ao buscar projetos:', err);

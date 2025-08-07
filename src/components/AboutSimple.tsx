@@ -159,7 +159,7 @@ const SkillsTitle = styled.h3`
 
 export const AboutSimple = () => {
   const { t } = useTranslation();
-  
+
   const skills = [
     // Frontend Core
     {
