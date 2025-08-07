@@ -125,9 +125,42 @@ const RightSection = styled.div`
   }
 `;
 
+// 🎮 Texto de interação para o cubo
+const InteractionText = styled.div`
+  color: ${({ theme }) => theme.colors.textSecondary};
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
+  padding: 2rem;
+  max-width: 280px;
+  position: relative;
+  z-index: 2;
+  
+  .highlight {
+    color: ${({ theme }) => theme.colors.primary};
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  
+  .emoji {
+    font-size: 1.2em;
+    margin: 0 0.2rem;
+  }
+  
+  .tip {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    font-style: italic;
+  }
 
-
-// 👋 Greeting estilo casual e moderno
+  @media (max-width: 1200px) {
+    font-size: 0.95rem;
+    padding: 1.5rem;
+  }
+`;
 const Greeting = styled.div`
   font-size: 1.2rem;
   font-weight: 500;
@@ -310,7 +343,21 @@ export const HomeSimple = () => {
       </LeftSection>
 
       <RightSection>
-        {/* Área direita vazia para contraste */}
+        <InteractionText>
+          <span className="highlight">Psiu!</span> <span className="emoji">👀</span>
+          <br />
+          Esse cubo ali não é só decoração...
+          <br /><br />
+          <span className="highlight">Passe o mouse</span> pra ver ele crescer <span className="emoji">✨</span>
+          <br />
+          <span className="highlight">Dê 2 cliques</span> pra uma surpresa <span className="emoji">💥</span>
+          <br />
+          <span className="highlight">Arraste ele</span> pela tela <span className="emoji">🎯</span>
+
+          <span className="tip">
+            Vai, experimenta! <span className="emoji">😄</span>
+          </span>
+        </InteractionText>
       </RightSection>
     </HomeContainer>
   );

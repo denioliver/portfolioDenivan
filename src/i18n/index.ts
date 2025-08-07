@@ -36,7 +36,7 @@ const getSavedLanguage = (): string => {
   return getBrowserLanguage();
 };
 
-const initOptions: InitOptions = {
+const initOptions = {
   // Idioma inicial baseado no localStorage ou navegador
   lng: getSavedLanguage(),
 
@@ -46,43 +46,56 @@ const initOptions: InitOptions = {
   // Idiomas suportados
   supportedLngs: ['pt', 'en', 'es'],
 
-  // Configuração do backend para carregar traduções
-  backend: {
-    loadPath: '/locales/{{lng}}/translation.json',
+  // Recursos de tradução
+  resources,
+
+  // Interpolação
+  interpolation: {
+    escapeValue: false, // React já faz o escape
   },
 
   // Configuração do detector de idioma
   detection: {
-    // Ordem de detecção
     order: ['localStorage', 'navigator'],
+    caches: ['localStorage'],
+    lookupLocalStorage: 'preferred-language',
+  },
+};
+loadPath: '/locales/{{lng}}/translation.json',
+  },
+
+// Configuração do detector de idioma
+detection: {
+  // Ordem de detecção
+  order: ['localStorage', 'navigator'],
 
     // Cache no localStorage
     caches: ['localStorage'],
 
-    // Chave para salvar no localStorage
-    lookupLocalStorage: 'preferred-language',
+      // Chave para salvar no localStorage
+      lookupLocalStorage: 'preferred-language',
   },
 
-  // Configurações de interpolação
-  interpolation: {
-    escapeValue: false, // React já faz escape
+// Configurações de interpolação
+interpolation: {
+  escapeValue: false, // React já faz escape
   },
 
-  // Configurações de debug (desabilitar em produção)
-  debug: process.env.NODE_ENV === 'development',
+// Configurações de debug (desabilitar em produção)
+debug: process.env.NODE_ENV === 'development',
 
   // Configurações de carregamento
   load: 'languageOnly' as const, // Carregar apenas 'pt' ao invés de 'pt-BR'
 
-  // Configurações de namespace
-  defaultNS: 'translation',
-  ns: ['translation'],
+    // Configurações de namespace
+    defaultNS: 'translation',
+      ns: ['translation'],
 
-  // Configurações adicionais
-  cleanCode: true,
-  appendNamespaceToMissingKey: false,
-  nsSeparator: ':',
-  keySeparator: '.',
+        // Configurações adicionais
+        cleanCode: true,
+          appendNamespaceToMissingKey: false,
+            nsSeparator: ':',
+              keySeparator: '.',
 };
 
 i18n
