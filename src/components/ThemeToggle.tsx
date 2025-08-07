@@ -9,10 +9,6 @@ interface ThemeToggleProps {
 
 // 🌙 Container do toggle com animações
 const ToggleContainer = styled(motion.button)`
-  position: fixed;
-  top: 2rem;
-  right: 2rem;
-  z-index: 1001; /* Acima do header */
   background: ${({ theme }) => theme.colors.card};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 50px;
@@ -34,8 +30,12 @@ const ToggleContainer = styled(motion.button)`
   @media (max-width: 768px) {
     width: 50px;
     height: 25px;
-    top: 1.2rem;
-    right: 4.5rem; /* Posicionado à esquerda do menu hambúrguer */
+  }
+  
+  @media (max-width: 480px) {
+    width: 40px;
+    height: 20px;
+    padding: 0 3px;
   }
 `;
 
@@ -56,12 +56,32 @@ const ToggleSlider = styled(motion.div)`
     height: 16px;
     font-size: 0.6rem;
   }
+  
+  @media (max-width: 480px) {
+    width: 12px;
+    height: 12px;
+    font-size: 0.5rem;
+  }
 `;
 
 // 🎨 Animações do toggle
-const toggleVariants = {
-  light: { x: 0 },
-  dark: { x: 25 }
+const getToggleVariants = () => {
+  if (window.innerWidth <= 480) {
+    return {
+      light: { x: 0 },
+      dark: { x: 15 }
+    };
+  } else if (window.innerWidth <= 768) {
+    return {
+      light: { x: 0 },
+      dark: { x: 19 }
+    };
+  } else {
+    return {
+      light: { x: 0 },
+      dark: { x: 25 }
+    };
+  }
 };
 
 /**
@@ -79,7 +99,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ isDark, toggleTheme })
       whileTap={{ scale: 0.95 }}
     >
       <ToggleSlider
-        variants={toggleVariants}
+        variants={getToggleVariants()}
         animate={isDark ? "dark" : "light"}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
       >

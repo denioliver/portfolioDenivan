@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { addFeedback } from '../services/firestore';
 import { handleFeedbackSubmission } from '../services/emailService';
 import logoGitHub from '../assets/logos/github.png';
@@ -232,6 +233,7 @@ const SuccessMessage = styled.div`
 `;
 
 export const ContactSimple = () => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
@@ -298,19 +300,19 @@ export const ContactSimple = () => {
   const contactInfo = [
     {
       icon: logoEmail,
-      title: 'Email',
+      title: t('contact.info.email'),
       text: 'denyoliver777@gmail.com',
       action: () => window.open('mailto:denyoliver777@gmail.com', '_blank')
     },
     {
       icon: logoGitHub,
-      title: 'GitHub',
+      title: t('contact.social.github'),
       text: 'github.com/denioliver',
       action: () => window.open('https://github.com/denioliver', '_blank')
     },
     {
       icon: logoLinkedIn,
-      title: 'LinkedIn',
+      title: t('contact.social.linkedin'),
       text: 'linkedin.com/in/denivan-oliveira',
       action: () => window.open('https://www.linkedin.com/in/denivan-oliveira', '_blank')
     }
@@ -319,11 +321,10 @@ export const ContactSimple = () => {
   return (
     <ContactContainer id="contact">
       <Container>
-        <Title>Vamos Trabalhar Juntos</Title>
+        <Title>{t('contact.title')}</Title>
 
         <Subtitle>
-          Tem uma ideia incrível ou precisa de um desenvolvedor talentoso?
-          Entre em contato e vamos criar algo extraordinário juntos!
+          {t('contact.subtitle')}
         </Subtitle>
 
         <ContentGrid>
@@ -338,55 +339,55 @@ export const ContactSimple = () => {
           </ContactInfo>
 
           <ContactForm>
-            <FormTitle>📝 Feedback do Portfólio</FormTitle>
+            <FormTitle>{t('contact.feedback.title')}</FormTitle>
             <Form onSubmit={handleSubmit}>
               <FormGroup>
-                <Label htmlFor="name">Nome Completo</Label>
+                <Label htmlFor="name">{t('contact.form.name')}</Label>
                 <Input
                   type="text"
                   id="name"
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  placeholder="Seu nome completo"
+                  placeholder={t('contact.form.namePlaceholder')}
                   required
                 />
               </FormGroup>
 
               <FormGroup>
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t('contact.form.email')}</Label>
                 <Input
                   type="email"
                   id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="seu.email@exemplo.com"
+                  placeholder={t('contact.form.emailPlaceholder')}
                   required
                 />
               </FormGroup>
 
               <FormGroup>
-                <Label htmlFor="subject">O que achou do portfólio?</Label>
+                <Label htmlFor="subject">{t('contact.feedback.subjectLabel')}</Label>
                 <Input
                   type="text"
                   id="subject"
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  placeholder="Design, funcionalidades, projetos..."
+                  placeholder={t('contact.feedback.subjectPlaceholder')}
                   required
                 />
               </FormGroup>
 
               <FormGroup>
-                <Label htmlFor="message">Seu feedback detalhado</Label>
+                <Label htmlFor="message">{t('contact.feedback.messageLabel')}</Label>
                 <TextArea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
-                  placeholder="Compartilhe sua opinião, sugestões ou críticas construtivas sobre meu portfólio..."
+                  placeholder={t('contact.feedback.messagePlaceholder')}
                   required
                 />
               </FormGroup>
@@ -396,12 +397,12 @@ export const ContactSimple = () => {
                 $loading={isLoading}
                 disabled={isLoading}
               >
-                {isLoading ? 'Enviando...' : 'Enviar Feedback 📨'}
+                {isLoading ? t('contact.form.sending') : t('contact.feedback.submit')}
               </SubmitButton>
 
               {showSuccess && (
                 <SuccessMessage>
-                  ✨ Feedback enviado com sucesso! Muito obrigado pela sua opinião.
+                  {t('contact.feedback.success')}
                 </SuccessMessage>
               )}
             </Form>

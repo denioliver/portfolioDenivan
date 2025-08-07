@@ -87,6 +87,18 @@ const BackButton = styled(Link)`
     color: ${({ theme }) => theme.colors.primary};
     transform: translateX(-4px);
   }
+  
+  @media (max-width: 768px) {
+    top: 1.5rem;
+    left: 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 480px) {
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.8rem;
+  }
 `;
 
 const HeaderControls = styled.div`
@@ -97,6 +109,18 @@ const HeaderControls = styled.div`
   align-items: center;
   gap: 1rem;
   z-index: 999;
+  
+  @media (max-width: 768px) {
+    top: 1.5rem;
+    right: 1.5rem;
+    gap: 0.75rem;
+  }
+  
+  @media (max-width: 480px) {
+    top: 1rem;
+    right: 1rem;
+    gap: 0.5rem;
+  }
 `;
 
 const Title = styled.h1`

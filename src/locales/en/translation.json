@@ -95,6 +95,7 @@
     "title": "Let's Talk",
     "subtitle": "Have a project in mind? Let's make it reality!",
     "form": {
+      "title": "Send a Message",
       "name": "Name",
       "namePlaceholder": "Your full name",
       "email": "Email",
@@ -122,7 +123,16 @@
       "twitter": "Twitter"
     },
     "success": "Message sent successfully!",
-    "error": "Error sending message. Please try again."
+    "error": "Error sending message. Please try again.",
+    "feedback": {
+      "title": "📝 Portfolio Feedback",
+      "subjectLabel": "What did you think of the portfolio?",
+      "subjectPlaceholder": "Design, features, projects...",
+      "messageLabel": "Your detailed feedback",
+      "messagePlaceholder": "Share your opinion, suggestions or constructive criticism about my portfolio...",
+      "submit": "Send Feedback 📨",
+      "success": "✨ Feedback sent successfully! Thank you so much for your opinion."
+    }
   },
   "login": {
     "title": "Admin Login",

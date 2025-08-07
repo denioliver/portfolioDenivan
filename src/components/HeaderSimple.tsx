@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LanguageToggle } from './LanguageToggle';
+import { ThemeToggle } from './ThemeToggle';
+import { useTheme } from '../contexts/ThemeContext';
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -64,6 +66,10 @@ const HeaderControls = styled.div`
   gap: 1rem;
   
   @media (max-width: 768px) {
+    gap: 0.75rem;
+  }
+  
+  @media (max-width: 480px) {
     gap: 0.5rem;
   }
 `;
@@ -100,9 +106,31 @@ const MobileMenuButton = styled.button`
   color: ${({ theme }) => theme.colors.textSecondary};
   font-size: 1.5rem;
   cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  min-width: 40px;
+  height: 40px;
+  
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary};
+    background: ${({ theme }) => theme.colors.primary}10;
+  }
   
   @media (max-width: 768px) {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    min-width: 36px;
+    height: 36px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+    min-width: 32px;
+    height: 32px;
+    padding: 0.3rem;
   }
 `;
 
@@ -165,6 +193,7 @@ const NavLink = styled.a`
 
 export const HeaderSimple = () => {
   const { t } = useTranslation();
+  const { isDark, toggleTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -237,6 +266,7 @@ export const HeaderSimple = () => {
 
         <HeaderControls>
           <LanguageToggle />
+          <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
           <MobileMenuButton onClick={toggleMobileMenu}>
             {isMobileMenuOpen ? '✕' : '☰'}
           </MobileMenuButton>

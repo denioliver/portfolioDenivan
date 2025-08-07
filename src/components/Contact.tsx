@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ContactSection = styled.section`
   min-height: 100vh;
@@ -285,6 +286,7 @@ const SuccessMessage = styled(motion.div)`
 `;
 
 export const Contact = () => {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [isLoading, setIsLoading] = useState(false);
@@ -325,8 +327,8 @@ export const Contact = () => {
 
   const contactInfo = [
     {
-      icon: '📧',
-      title: 'Email',
+      icon: '✉️',
+      title: t('contact.info.email'),
       text: 'denivan.oliveira@email.com',
       link: 'mailto:denivan.oliveira@email.com'
     },
@@ -338,16 +340,16 @@ export const Contact = () => {
     },
     {
       icon: '📍',
-      title: 'Localização',
-      text: 'São Paulo, SP - Brasil',
+      title: t('contact.info.location'),
+      text: t('contact.info.locationValue'),
       link: null
     }
   ];
 
   const socialLinks = [
-    { icon: '💼', url: 'https://linkedin.com', label: 'LinkedIn' },
-    { icon: '🐱', url: 'https://github.com', label: 'GitHub' },
-    { icon: '🐦', url: 'https://twitter.com', label: 'Twitter' },
+    { icon: '💼', url: 'https://linkedin.com', label: t('contact.social.linkedin') },
+    { icon: '🐱', url: 'https://github.com', label: t('contact.social.github') },
+    { icon: '🐦', url: 'https://twitter.com', label: t('contact.social.twitter') },
     { icon: '📷', url: 'https://instagram.com', label: 'Instagram' }
   ];
 
@@ -360,7 +362,7 @@ export const Contact = () => {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
         >
-          Vamos Trabalhar Juntos
+          {t('contact.title')}
         </SectionTitle>
 
         <SectionSubtitle
@@ -368,8 +370,7 @@ export const Contact = () => {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          Tenho uma ideia incrível ou precisa de um desenvolvedor talentoso?
-          Entre em contato e vamos criar algo extraordinário juntos!
+          {t('contact.subtitle')}
         </SectionSubtitle>
 
         <ContentGrid>
@@ -401,7 +402,7 @@ export const Contact = () => {
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
               transition={{ duration: 0.6, delay: 0.7 }}
             >
-              <InfoTitle>Redes Sociais</InfoTitle>
+              <InfoTitle>{t('contact.social.title')}</InfoTitle>
               <SocialLinks>
                 {socialLinks.map((social, index) => (
                   <SocialLink
@@ -425,55 +426,55 @@ export const Contact = () => {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            <FormTitle>Envie uma Mensagem</FormTitle>
+            <FormTitle>{t('contact.form.title')}</FormTitle>
             <Form onSubmit={handleSubmit}>
               <FormGroup>
-                <Label htmlFor="name">Nome Completo</Label>
+                <Label htmlFor="name">{t('contact.form.name')}</Label>
                 <Input
                   type="text"
                   id="name"
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  placeholder="Seu nome completo"
+                  placeholder={t('contact.form.namePlaceholder')}
                   required
                 />
               </FormGroup>
 
               <FormGroup>
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t('contact.form.email')}</Label>
                 <Input
                   type="email"
                   id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="seu.email@exemplo.com"
+                  placeholder={t('contact.form.emailPlaceholder')}
                   required
                 />
               </FormGroup>
 
               <FormGroup>
-                <Label htmlFor="subject">Assunto</Label>
+                <Label htmlFor="subject">{t('contact.form.subject')}</Label>
                 <Input
                   type="text"
                   id="subject"
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  placeholder="Sobre o que você gostaria de falar?"
+                  placeholder={t('contact.form.subjectPlaceholder')}
                   required
                 />
               </FormGroup>
 
               <FormGroup>
-                <Label htmlFor="message">Mensagem</Label>
+                <Label htmlFor="message">{t('contact.form.message')}</Label>
                 <TextArea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
-                  placeholder="Descreva seu projeto ou ideia em detalhes..."
+                  placeholder={t('contact.form.messagePlaceholder')}
                   required
                 />
               </FormGroup>
@@ -485,7 +486,7 @@ export const Contact = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                {isLoading ? 'Enviando...' : 'Enviar Mensagem'}
+                {isLoading ? t('contact.form.sending') : t('contact.form.submit')}
               </SubmitButton>
 
               {showSuccess && (
@@ -494,7 +495,7 @@ export const Contact = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                 >
-                  ✨ Mensagem enviada com sucesso! Entrarei em contato em breve.
+                  {t('contact.success')}
                 </SuccessMessage>
               )}
             </Form>

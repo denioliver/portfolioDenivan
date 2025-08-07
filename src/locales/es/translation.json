@@ -95,6 +95,7 @@
     "title": "Hablemos",
     "subtitle": "¿Tienes un proyecto en mente? ¡Hagámoslo realidad!",
     "form": {
+      "title": "Enviar un Mensaje",
       "name": "Nombre",
       "namePlaceholder": "Tu nombre completo",
       "email": "Email",
@@ -122,7 +123,16 @@
       "twitter": "Twitter"
     },
     "success": "¡Mensaje enviado con éxito!",
-    "error": "Error al enviar el mensaje. Inténtalo de nuevo."
+    "error": "Error al enviar el mensaje. Inténtalo de nuevo.",
+    "feedback": {
+      "title": "📝 Feedback del Portafolio",
+      "subjectLabel": "¿Qué te pareció el portafolio?",
+      "subjectPlaceholder": "Diseño, funcionalidades, proyectos...",
+      "messageLabel": "Tu feedback detallado",
+      "messagePlaceholder": "Comparte tu opinión, sugerencias o críticas constructivas sobre mi portafolio...",
+      "submit": "Enviar Feedback 📨",
+      "success": "✨ ¡Feedback enviado con éxito! Muchas gracias por tu opinión."
+    }
   },
   "login": {
     "title": "Acceso Admin",

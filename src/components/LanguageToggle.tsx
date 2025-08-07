@@ -20,7 +20,22 @@ const LanguageButton = styled.button`
   gap: 0.5rem;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
-  min-width: 80px;
+  min-width: 70px;
+  height: 40px;
+  
+  @media (max-width: 768px) {
+    min-width: 60px;
+    height: 36px;
+    padding: 0.4rem;
+    gap: 0.3rem;
+  }
+  
+  @media (max-width: 480px) {
+    min-width: 50px;
+    height: 32px;
+    padding: 0.3rem;
+    gap: 0.2rem;
+  }
   
   &:hover {
     border-color: ${({ theme }) => theme.colors.primary};
@@ -39,6 +54,14 @@ const LanguageLabel = styled.span`
   font-size: 0.9rem;
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   text-transform: uppercase;
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.75rem;
+  }
 `;
 
 const DropdownIcon = styled.span<{ $isOpen: boolean }>`
