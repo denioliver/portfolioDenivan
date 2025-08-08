@@ -9,7 +9,6 @@ import { HomeSimple } from './components/HomeSimple';
 import { AboutSimple } from './components/AboutSimple';
 import { ProjectsSimple } from './components/ProjectsSimple';
 import { ContactSimple } from './components/ContactSimple';
-import { ThemeToggle } from './components/ThemeToggle';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/DashboardSimple';
 import { ProtectedRoute } from './routes/ProtectedRoute';
@@ -71,7 +70,6 @@ function AppContent() {
           <ContactSimple />
         </section>
       </main>
-      <ThemeToggle toggleTheme={toggleTheme} isDark={isDark} />
     </>
   );
 

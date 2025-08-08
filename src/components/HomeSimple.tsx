@@ -59,11 +59,6 @@ const CubeContainer = styled.div`
       z-index: 5;
       pointer-events: auto;
     }
-
-    @media (max-width: 480px) {
-      /* Mobile muito pequeno: Ainda mais próximo */
-      margin: 10px;
-    }
   }
 `;
 
@@ -141,10 +136,6 @@ const RightSection = styled.div`
     flex: 0 0 100%; /* Ocupa largura total em tablet */
 
     min-height: auto;
-  }
-
-  @media (max-width: 480px) {
-    display: none; /* Remove apenas em mobile muito pequeno */
   }
 `;
 

@@ -125,7 +125,7 @@ const InfoText = styled.p`
 `;
 
 const ContactForm = styled.div`
-  width: 80%;
+  width: 100%;
   background: ${({ theme }) => theme.colors.card};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 20px;
@@ -219,6 +219,12 @@ const SubmitButton = styled.button<{ $loading: boolean }>`
   &:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(139, 124, 248, 0.3);
+  }
+
+  @media (max-width: 968px) {
+    padding: 10px 20px;
+    font-weight: 400;
+    font-size: 0.8rem;
   }
 `;
 
