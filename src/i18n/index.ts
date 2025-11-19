@@ -1,11 +1,10 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
 
 // Importar traduções diretamente
-import ptTranslation from '../../public/locales/pt/translation.json';
-import enTranslation from '../../public/locales/en/translation.json';
-import esTranslation from '../../public/locales/es/translation.json';
+import ptTranslation from '../locales/pt/translation.json';
+import enTranslation from '../locales/en/translation.json';
+import esTranslation from '../locales/es/translation.json';
 
 // Recursos de tradução
 const resources = {
@@ -20,89 +19,58 @@ const resources = {
   }
 };
 
-// Função para detectar idioma do navegador
-const getBrowserLanguage = (): string => {
-  const browserLang = navigator.language.split('-')[0];
-  const supportedLanguages = ['pt', 'en', 'es'];
-  return supportedLanguages.includes(browserLang) ? browserLang : 'pt';
-};
-
-// Função para obter idioma salvo no localStorage
-const getSavedLanguage = (): string => {
+// Configurar idioma inicial
+const getInitialLanguage = () => {
   const saved = localStorage.getItem('preferred-language');
   if (saved && ['pt', 'en', 'es'].includes(saved)) {
     return saved;
   }
-  return getBrowserLanguage();
+
+  const browserLang = navigator.language.split('-')[0];
+  return ['pt', 'en', 'es'].includes(browserLang) ? browserLang : 'pt';
 };
 
-const initOptions = {
-  // Idioma inicial baseado no localStorage ou navegador
-  lng: getSavedLanguage(),
+// Inicializar i18n
+const initI18n = async () => {
+  const initialLang = getInitialLanguage();
 
-  // Idioma de fallback
-  fallbackLng: 'pt',
+  await i18n
+    .use(initReactI18next)
+    .init({
+      resources,
+      lng: initialLang,
+      fallbackLng: 'pt',
 
-  // Idiomas suportados
-  supportedLngs: ['pt', 'en', 'es'],
+      interpolation: {
+        escapeValue: false,
+      },
 
-  // Recursos de tradução
-  resources,
+      debug: false,
 
-  // Interpolação
-  interpolation: {
-    escapeValue: false, // React já faz o escape
-  },
+      react: {
+        useSuspense: false,
+      }
+    });
 
-  // Configuração do detector de idioma
-  detection: {
-    order: ['localStorage', 'navigator'],
-    caches: ['localStorage'],
-    lookupLocalStorage: 'preferred-language',
-  },
-};
-loadPath: '/locales/{{lng}}/translation.json',
-  },
+  // Configurar document lang
+  document.documentElement.lang = i18n.language;
 
-// Configuração do detector de idioma
-detection: {
-  // Ordem de detecção
-  order: ['localStorage', 'navigator'],
+  console.log('✅ i18n inicializado com sucesso!');
+  console.log('Idioma atual:', i18n.language);
+  console.log('Recursos carregados:', Object.keys(resources));
 
-    // Cache no localStorage
-    caches: ['localStorage'],
-
-      // Chave para salvar no localStorage
-      lookupLocalStorage: 'preferred-language',
-  },
-
-// Configurações de interpolação
-interpolation: {
-  escapeValue: false, // React já faz escape
-  },
-
-// Configurações de debug (desabilitar em produção)
-debug: process.env.NODE_ENV === 'development',
-
-  // Configurações de carregamento
-  load: 'languageOnly' as const, // Carregar apenas 'pt' ao invés de 'pt-BR'
-
-    // Configurações de namespace
-    defaultNS: 'translation',
-      ns: ['translation'],
-
-        // Configurações adicionais
-        cleanCode: true,
-          appendNamespaceToMissingKey: false,
-            nsSeparator: ':',
-              keySeparator: '.',
+  return i18n;
 };
 
-i18n
-  .use(Backend)
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init(initOptions);
+// Inicializar imediatamente
+initI18n();
+
+// Salvar idioma no localStorage quando mudar
+i18n.on('languageChanged', (lng) => {
+  localStorage.setItem('preferred-language', lng);
+  document.documentElement.lang = lng;
+  console.log('🌍 Idioma alterado para:', lng);
+});
 
 // Função para trocar idioma e salvar preferência
 export const changeLanguage = (language: string) => {
@@ -121,19 +89,19 @@ export const getSupportedLanguages = () => [
     code: 'pt',
     name: 'Português',
     flag: '🇧🇷',
-    flagAlt: 'BR' // Fallback caso emoji não funcione
+    flagAlt: 'BR'
   },
   {
     code: 'en',
     name: 'English',
     flag: '🇺🇸',
-    flagAlt: 'US' // Fallback caso emoji não funcione
+    flagAlt: 'US'
   },
   {
     code: 'es',
     name: 'Español',
     flag: '🇪🇸',
-    flagAlt: 'ES' // Fallback caso emoji não funcione
+    flagAlt: 'ES'
   },
 ];
 
